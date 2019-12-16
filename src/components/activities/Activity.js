@@ -14,7 +14,7 @@ export default () => {
                     </MDBCardText>
                     <MDBCardText>{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</MDBCardText>
                     <div onClick={() => {setLinksOpen(!linksOpen)}} style={{display: "flex", alignItems: "center"}}>
-                        <MDBIcon size="sm" icon={!linksOpen ? "chevron-right" : "chevron-down"} />
+                        <MDBIcon size="sm" icon={!linksOpen ? "angle-right" : "angle-down"} />
                         <MDBCardText style={{marginLeft: "10px"}}>Links (3)</MDBCardText>
                     </div>
                     <MDBCollapse isOpen={linksOpen}>
