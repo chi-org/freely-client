@@ -14,7 +14,7 @@ export default (props) => {
                     <input type="color" value={props.color} style={{maxWidth: "30px", height: "30px", padding: "0px", marginBottom: "0px", border: "none"}} />
                     <p style={{marginLeft: "10px", marginBottom: "0px"}}>Color</p>
                     <div style={{display: "flex", justifyContent: "flex-end", alignItems: "center", width: "100%"}}>
-                        <a href="#" style={{marginBottom: "0px", marginRight: "10px"}}>View activites</a>
+                        <a href="#" style={{marginBottom: "0px", marginRight: "10px"}}>View activities</a>
                         <MDBIcon size="lg" icon="trash" />
                     </div>
                 </div>
