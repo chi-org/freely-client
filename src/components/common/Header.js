@@ -3,24 +3,20 @@ import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, 
 
 export default () => {
     const [isOpen, setIsOpen] = useState(false);
-
-    const toggleNavbar = () => {
-        setIsOpen(!isOpen);
-    }
+    const [pageTitle, setPageTitle] = useState("Activities");
 
     return (
-        // <MDBNavbar light expand="md"> use for desktop navbar, commented for testing mobile layout
-        <MDBNavbar light>
-            <MDBNavbarBrand center>Activites</MDBNavbarBrand>
-            <MDBNavbarToggler onClick={toggleNavbar} />
+        <MDBNavbar light expand="md">
+            <MDBNavbarBrand center className="d-block d-md-none">{pageTitle}</MDBNavbarBrand>
+            <MDBNavbarToggler onClick={() => setIsOpen(!isOpen)} />
 
             <MDBCollapse isOpen={isOpen} navbar>
                 <MDBNavbarNav left>
-                    <MDBNavItem active>
-                        <MDBNavLink to="/activities" onClick={toggleNavbar}>Activities</MDBNavLink>
+                    <MDBNavItem>
+                        <MDBNavLink to="/activities" onClick={() => (setIsOpen(false), setPageTitle("Activities"))}>Activities</MDBNavLink>
                     </MDBNavItem>
-                    <MDBNavItem active>
-                        <MDBNavLink to="/students" onClick={toggleNavbar}>Student Setup</MDBNavLink>
+                    <MDBNavItem>
+                        <MDBNavLink to="/students" onClick={() => (setIsOpen(false), setPageTitle("Student Setup"))}>Student Setup</MDBNavLink>
                     </MDBNavItem>
                 </MDBNavbarNav>
             </MDBCollapse>
