@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Redirect} from 'react-router-dom';
 
 import Header from "./components/common/Header";
 import Activities from "./components/activities/Activities";
@@ -16,6 +16,7 @@ export default () => {
         <Route exact path="/activities/new" render={() => <NewActivity />} />
         <Route exact path="/activities/search" render={() => <ActivitySearch />} />
         <Route exact path="/students" render={() => <Students />} />
+        <Redirect from="/" to="/activities" />
       </BrowserRouter>
     </div>
   );
