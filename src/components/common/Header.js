@@ -4,23 +4,18 @@ import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, 
 export default () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const toggleNavbar = () => {
-        setIsOpen(!isOpen);
-    }
-
     return (
-        // <MDBNavbar light expand="md"> use for desktop navbar, commented for testing mobile layout
-        <MDBNavbar light>
-            <MDBNavbarBrand center>Activites</MDBNavbarBrand>
-            <MDBNavbarToggler onClick={toggleNavbar} />
+        <MDBNavbar light expand="md">
+            <MDBNavbarBrand center className="d-block d-md-none">Activities</MDBNavbarBrand>
+            <MDBNavbarToggler onClick={() => setIsOpen(!isOpen)} />
 
             <MDBCollapse isOpen={isOpen} navbar>
                 <MDBNavbarNav left>
-                    <MDBNavItem active>
-                        <MDBNavLink to="/activities" onClick={toggleNavbar}>Activities</MDBNavLink>
+                    <MDBNavItem>
+                        <MDBNavLink to="/activities" onClick={() => setIsOpen(false)}>Activities</MDBNavLink>
                     </MDBNavItem>
-                    <MDBNavItem active>
-                        <MDBNavLink to="/students" onClick={toggleNavbar}>Student Setup</MDBNavLink>
+                    <MDBNavItem>
+                        <MDBNavLink to="/students" onClick={() => setIsOpen(false)}>Student Setup</MDBNavLink>
                     </MDBNavItem>
                 </MDBNavbarNav>
             </MDBCollapse>
