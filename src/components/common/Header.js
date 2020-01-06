@@ -7,7 +7,7 @@ export default () => {
     return (
         // <MDBNavbar light expand="md"> use for desktop navbar, commented for testing mobile layout
         <MDBNavbar light>
-            <MDBNavbarBrand center>Activites</MDBNavbarBrand>
+            <MDBNavbarBrand >Activites</MDBNavbarBrand>
             <MDBNavbarToggler onClick={() => {console.log("isOpen:", isOpen); setIsOpen(!isOpen)}} />
 
             <MDBCollapse isOpen={isOpen} navbar>
