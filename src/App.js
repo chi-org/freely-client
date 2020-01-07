@@ -1,4 +1,3 @@
-import React from 'react';
 import {BrowserRouter, Route, Redirect} from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
