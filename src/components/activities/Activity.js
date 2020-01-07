@@ -8,8 +8,6 @@ export default ({data}) => {
 
     const [linksOpen, setLinksOpen] = useState(false);
 
-    console.log(data)
-
     return (
         <MDBCard>
             <MDBCardBody style={{display: "flex"}}>
@@ -37,7 +35,7 @@ export default ({data}) => {
                     </div>
                     <div style={{display: "flex", justifyContent: "flex-end", alignItems: "flex-end"}}>
                         {data.assets.map((asset, i) =>
-                            <img key={i} style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" />
+                            <img key={i} style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" alt="" />
                         )}
                     </div>
                 </div>

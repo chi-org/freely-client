@@ -5,7 +5,6 @@ import ActivityDateRange from './ActivityDateRange';
 import Activity from './Activity';
 
 export default ({activities}) => {
-    console.log(activities)
     return (
         <div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
             <StudentPicker />

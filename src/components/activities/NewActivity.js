@@ -33,8 +33,8 @@ export default () => {
                     <div style={{width: "70px", display: "flex", justifyContent: "center"}}>
                         <MDBIcon size="lg" icon="camera" />
                     </div>
-                    <img style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" />
-                    <img style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" />
+                    <img style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" alt="" />
+                    <img style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" alt="" />
                 </div>
 
                 <h4 style={{marginTop: "30px"}}>Categories</h4>
