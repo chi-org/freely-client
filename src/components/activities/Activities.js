@@ -1,8 +1,11 @@
 import React from 'react';
 import {MDBContainer, MDBBtn, MDBIcon} from 'mdbreact';
 import Activity from './Activity';
+import { useHistory } from 'react-router-dom';
 
 export default ({activities: data}) => {
+
+    const history = useHistory();
 
     const studentPicker = () => {
         return (
@@ -39,7 +42,7 @@ export default ({activities: data}) => {
 
     const newActivityButton = () => {
         return (
-            <MDBBtn color="primary" style={{borderRadius: "50%", padding: "0px", width: "3em", height: "3em", margin: "0 auto 20px auto"}}>
+            <MDBBtn onClick={() => history.push("/activities/new")} color="primary" style={{borderRadius: "50%", padding: "0px", width: "3em", height: "3em", margin: "0 auto 20px auto"}}>
                 <MDBIcon icon="plus" />
             </MDBBtn>
         )
