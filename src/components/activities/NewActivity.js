@@ -90,7 +90,7 @@ export default () => {
             </Fragment>
         )
     }
-
+    
     const categories = () => {
         return (
             <Fragment>
