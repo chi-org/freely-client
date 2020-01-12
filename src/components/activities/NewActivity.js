@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react';
-import { MDBContainer, MDBIcon, MDBBtn, MDBInput, MDBBadge } from 'mdbreact';
+import React, { useState, Fragment } from 'react';
+import { MDBContainer, MDBIcon, MDBBtn, MDBInput, MDBBadge, MDBModal, MDBModalHeader, MDBModalBody, MDBListGroup, MDBListGroupItem } from 'mdbreact';
 import { useHistory } from 'react-router-dom';
 
 export default () => {
 
+    const [showStudentsModal, setShowStudentsModal] = useState(false);
     const history = useHistory();
 
     const header = () => {
@@ -36,10 +37,33 @@ export default () => {
             <Fragment>
                 <h4 style={{marginTop: "30px"}}>Students</h4>
                 <MDBBadge pill style={{marginRight: "5px"}} color="indigo">Student 1</MDBBadge>
-                <MDBBadge pill style={{marginRight: "5px"}} color="white">
-                    <MDBIcon style={{color: "black"}} icon="plus" />
-                </MDBBadge>
+                <span className="click-action" onClick={() => setShowStudentsModal(true)} >
+                    <MDBBadge pill style={{marginRight: "5px"}} color="white">
+                        <MDBIcon style={{color: "black"}} icon="plus" />
+                    </MDBBadge>
+                </span>
             </Fragment>
+        )
+    }
+
+    const studentModal = () => {
+        const students = ["Student 1", "Student 2", "Student 3"];
+
+        return (
+            <MDBModal isOpen={showStudentsModal}>
+                <MDBModalHeader toggle={() => setShowStudentsModal(!showStudentsModal)}>Students</MDBModalHeader>
+                <MDBModalBody>
+                    <MDBListGroup>
+                        <div>
+                            {students.map((student, i) => {
+                                return <span className="click-action" onClick={() => {setShowStudentsModal(false)}} style={{marginRight: "10px"}}>
+                                    <MDBBadge key={i} pill color="indigo">{student}</MDBBadge>
+                                </span>
+                            })}
+                        </div>
+                    </MDBListGroup>
+                </MDBModalBody>
+            </MDBModal>
         )
     }
 
@@ -89,6 +113,7 @@ export default () => {
                 {images()}
                 {/* {categories()} */}
                 <MDBBtn style={{marginTop: "30px", width: "100%"}} color="primary">Done</MDBBtn>
+                {studentModal()}
             </form>
         </MDBContainer>
     )

@@ -49,7 +49,7 @@ export default ({activities: data}) => {
     }
 
     return (
-        <div style={{display: "flex", flexDirection: "column", justifyContent: "center"}}>
+        <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
             {studentPicker()}
             {activityDateRange()}
             {activities()}
