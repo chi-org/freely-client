@@ -52,7 +52,9 @@ const Header = (props) => {
             <MDBNavbarToggler onClick={() => {console.log("isOpen:", isOpen); setIsOpen(!isOpen)}} />
 
             <MDBCollapse isOpen={isOpen} navbar>
+
                 <MDBNavbarNav left>
+
                 {loggedInUser ? navLoggedIn() : navLoggedOut()}
                 </MDBNavbarNav>
             </MDBCollapse>
@@ -63,14 +65,3 @@ const Header = (props) => {
 export default Header
 
 
-// <MDBNavItem active>
-// <MDBNavbarBrand>Student Setup</MDBNavbarBrand>
-// </MDBNavItem>
-// <MDBNavItem>
-// <MDBBtn href="/auth/login" color="primary">Login</MDBBtn>
-// {/* {!isAuthenticated && (
-// <button onClick={() => loginWithRedirect({})}>Log in</button>
-// )}
-
-// {isAuthenticated && <button onClick={() => logout()}>Log out</button>} */}
-// </MDBNavItem>
