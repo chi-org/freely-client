@@ -12,6 +12,7 @@ import { userAuthenticated, setLoggedInUser, getLoggedInUser } from "./services/
 import { StateContext } from "./config/store";
 
 import { getAllActivities } from './services/activity_services';
+import Login from './components/auth/Login';
 
 export default () => {
   const [activities, setActivities] = useState([]);
@@ -57,6 +58,7 @@ export default () => {
           <Route exact path="/activities/new" render={() => <NewActivity activities={activities} />} />
           <Route exact path="/activities/search" render={() => <ActivitySearch />} />
           <Route exact path="/students" render={() => <Students />} />
+          <Route exact path="/login" render={() => <Login />} />
         </BrowserRouter>
       </StateContext.Provider>
     </div>
