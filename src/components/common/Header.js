@@ -7,16 +7,16 @@ export default () => {
 
     return (
         <MDBNavbar light expand="md">
-            <MDBNavbarBrand center>{pageTitle}</MDBNavbarBrand>
+            <MDBNavbarBrand center="true">{pageTitle}</MDBNavbarBrand>
             <MDBNavbarToggler onClick={() => setIsOpen(!isOpen)} />
 
             <MDBCollapse isOpen={isOpen} navbar>
                 <MDBNavbarNav left>
                     {pageTitle !== "Activities" && <MDBNavItem>
-                        <MDBNavLink to="/activities" onClick={() => (setIsOpen(false), setPageTitle("Activities"))}>Activities</MDBNavLink>
+                        <MDBNavLink to="/activities" onClick={() => {setIsOpen(false); setPageTitle("Activities")}}>Activities</MDBNavLink>
                     </MDBNavItem>}
                     {pageTitle !== "Student Setup" && <MDBNavItem>
-                        <MDBNavLink to="/students" onClick={() => (setIsOpen(false), setPageTitle("Student Setup"))}>Student Setup</MDBNavLink>
+                        <MDBNavLink to="/students" onClick={() => {setIsOpen(false); setPageTitle("Student Setup")}}>Student Setup</MDBNavLink>
                     </MDBNavItem>}
                 </MDBNavbarNav>
             </MDBCollapse>
