@@ -28,7 +28,7 @@ export default () => {
         <Route path="/" render={() => <Header />} />
         <Route exact path="/" render={() => <Redirect to="/activities" />} />
         <Route exact path="/activities" render={() => <Activities activities={activities} />} />
-        <Route exact path="/activities/new" render={() => <NewActivity />} />
+        <Route exact path="/activities/new" render={() => <NewActivity activities={activities} />} />
         <Route exact path="/activities/search" render={() => <ActivitySearch />} />
         <Route exact path="/students" render={() => <Students />} />
       </BrowserRouter>

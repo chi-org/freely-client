@@ -12,10 +12,10 @@ export default () => {
 
             <MDBCollapse isOpen={isOpen} navbar>
                 <MDBNavbarNav left>
-                    {pageTitle != "Activities" && <MDBNavItem>
+                    {pageTitle !== "Activities" && <MDBNavItem>
                         <MDBNavLink to="/activities" onClick={() => {setIsOpen(false); setPageTitle("Activities")}}>Activities</MDBNavLink>
                     </MDBNavItem>}
-                    {pageTitle != "Student Setup" && <MDBNavItem>
+                    {pageTitle !== "Student Setup" && <MDBNavItem>
                         <MDBNavLink to="/students" onClick={() => {setIsOpen(false); setPageTitle("Student Setup")}}>Student Setup</MDBNavLink>
                     </MDBNavItem>}
                 </MDBNavbarNav>

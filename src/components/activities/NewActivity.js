@@ -1,11 +1,33 @@
 import React, { useState, Fragment } from 'react';
-import { MDBContainer, MDBIcon, MDBBtn, MDBInput, MDBBadge, MDBModal, MDBModalHeader, MDBModalBody, MDBListGroup, MDBListGroupItem } from 'mdbreact';
+import { MDBContainer, MDBIcon, MDBBtn, MDBInput, MDBBadge, MDBModal, MDBModalHeader, MDBModalBody } from 'mdbreact';
 import { useHistory } from 'react-router-dom';
+import {submitNewActivity as addNewActivity} from '../../services/activity_services';
 
-export default () => {
+export default ({activities}) => {
 
     const [showStudentsModal, setShowStudentsModal] = useState(false);
     const history = useHistory();
+
+    const submitNewActivity = (event) => {
+        event.preventDefault();
+
+        const form = event.target;
+        const data = {
+            name: "",
+            textContent: form.details.value,
+            date: form.date.value || null,
+            completed: form.completed.checked,
+            students: [],
+            assets: []
+        }
+        
+        addNewActivity(data).then((response) => {
+            activities.push(data)
+            history.push("/activities");
+        }).catch(error => {
+            console.log("An error occurred during submission:", error);
+        });
+    }
 
     const header = () => {
         return (
@@ -20,13 +42,13 @@ export default () => {
     }
 
     const date = () => {
-        return <MDBInput type="date" />;
+        return <MDBInput name="date" type="date" />;
     }
 
     const completed = () => {
         return (
             <div style={{display: "flex"}}>
-                <MDBInput style={{height: "1em"}} type='checkbox' />
+                <MDBInput name="completed" style={{height: "1em"}} type='checkbox' />
                 <p style={{marginLeft: "10px"}}>Completed</p>
             </div>
         )
@@ -53,15 +75,13 @@ export default () => {
             <MDBModal isOpen={showStudentsModal}>
                 <MDBModalHeader toggle={() => setShowStudentsModal(!showStudentsModal)}>Students</MDBModalHeader>
                 <MDBModalBody>
-                    <MDBListGroup>
-                        <div>
-                            {students.map((student, i) => {
-                                return <span className="click-action" onClick={() => {setShowStudentsModal(false)}} style={{marginRight: "10px"}}>
-                                    <MDBBadge key={i} pill color="indigo">{student}</MDBBadge>
-                                </span>
-                            })}
-                        </div>
-                    </MDBListGroup>
+                    <div>
+                        {students.map((student, i) => {
+                            return <span key={i} className="click-action" onClick={() => {setShowStudentsModal(false)}} style={{marginRight: "10px"}}>
+                                <MDBBadge pill color="indigo">{student}</MDBBadge>
+                            </span>
+                        })}
+                    </div>
                 </MDBModalBody>
             </MDBModal>
         )
@@ -71,7 +91,7 @@ export default () => {
         return (
             <Fragment>
                 <h4 style={{marginTop: "30px"}}>Details</h4>
-                <MDBInput type="textarea" label="Enter your text here..."></MDBInput>
+                <MDBInput name="details" type="textarea" label="Enter your text here..."></MDBInput>
             </Fragment>
         )
     }
@@ -91,28 +111,29 @@ export default () => {
         )
     }
     
-    const categories = () => {
-        return (
-            <Fragment>
-                <h4 style={{marginTop: "30px"}}>Categories</h4>
-                <MDBBtn style={{marginTop: "30px"}} color="primary">
-                    <MDBIcon style={{marginRight: "10px"}} icon="plus" />Add
-                </MDBBtn>
-            </Fragment>
-        )
-    }
+    // Category support not in MVP, but present in mockups and thus unused
+    // const categories = () => {
+    //     return (
+    //         <Fragment>
+    //             <h4 style={{marginTop: "30px"}}>Categories</h4>
+    //             <MDBBtn style={{marginTop: "30px"}} color="primary">
+    //                 <MDBIcon style={{marginRight: "10px"}} icon="plus" />Add
+    //             </MDBBtn>
+    //         </Fragment>
+    //     )
+    // }
     
     return (
         <MDBContainer style={{marginTop: "30px"}}>
             {header()}
-            <form>
+            <form onSubmit={submitNewActivity}>
                 {date()}
                 {completed()}
                 {students()}
                 {details()}
                 {images()}
                 {/* {categories()} */}
-                <MDBBtn style={{marginTop: "30px", width: "100%"}} color="primary">Done</MDBBtn>
+                <MDBBtn type="submit" style={{marginTop: "30px", width: "100%"}} color="primary">Done</MDBBtn>
                 {studentModal()}
             </form>
         </MDBContainer>
