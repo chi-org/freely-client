@@ -26,27 +26,26 @@ export default () => {
     .catch((error) => console.log(error))
   }
 
-  // useEffect(()=> {
-	// 		// If we have login information persisted and we're still logged into the server, set the state
-	// 		userAuthenticated().then(() => {
-	// 			dispatch({
-	// 				type: "setLoggedInUser",
-	// 				data: getLoggedInUser()
-	// 			})
-	// 		}).catch((error) => {
-	// 			console.log("got an error trying to check authenticated user:", error)
-	// 			setLoggedInUser(null)
-	// 			dispatch({
-	// 				type: "setLoggedInUser",
-	// 				data: null
-	// 			})
-	// 		})
-	// 		return () =>{}
-	// 	}, [])
+  useEffect(()=> {
+			// If we have login information persisted and we're still logged into the server, set the state
+			userAuthenticated().then(() => {
+				dispatch({
+					type: "setLoggedInUser",
+					data: getLoggedInUser()
+				});
+			}).catch((error) => {
+				console.log("got an error trying to check authenticated user:", error)
+				setLoggedInUser(null)
+				dispatch({
+					type: "setLoggedInUser",
+					data: null
+				})
+      });
 
-  useEffect(() => {
-    getActivities();
-  }, []);
+      getActivities();
+      
+			return () =>{}
+		}, []);
 
   return (
     <div>
