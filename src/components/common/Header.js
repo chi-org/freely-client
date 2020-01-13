@@ -1,6 +1,6 @@
 import React, {Fragment, useState} from "react";
 import { NavLink, Redirect } from "react-router-dom"
-import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, MDBNavItem, MDBBtn} from "mdbreact";
+import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, MDBNavItem, MDBBtn, MDBNavLink} from "mdbreact";
 import {useGlobalState} from "../../config/store";
 import {logoutUser, setLoggedInUser} from "../../services/authServices"
 
@@ -39,21 +39,25 @@ const Header = (props) => {
         )
     }
     const [isOpen, setIsOpen] = useState(false);
+    const [pageTitle, setPageTitle] = useState("Activities");
 
     const { store, dispatch } = useGlobalState()
     const {loggedInUser} = store
 
     return (
-        // use for desktop navbar, commented for testing mobile layout
-        // <MDBNavbar light expand="md">
-        // Mobile layout
-        <MDBNavbar light>
-            <MDBNavbarBrand centerrenderAs="p">{loggedInUser || "Freely"}</MDBNavbarBrand>
-            <MDBNavbarToggler onClick={() => {console.log("isOpen:", isOpen); setIsOpen(!isOpen)}} />
+        <MDBNavbar light expand="md">
+            <MDBNavbarBrand center="true">{pageTitle}</MDBNavbarBrand>
+            <MDBNavbarToggler onClick={() => setIsOpen(!isOpen)} />
 
             <MDBCollapse isOpen={isOpen} navbar>
                 <MDBNavbarNav left>
-                {loggedInUser ? navLoggedIn() : navLoggedOut()}
+                    {pageTitle !== "Activities" && <MDBNavItem>
+                        <MDBNavLink to="/activities" onClick={() => {setIsOpen(false); setPageTitle("Activities")}}>Activities</MDBNavLink>
+                    </MDBNavItem>}
+                    {pageTitle !== "Student Setup" && <MDBNavItem>
+                        <MDBNavLink to="/students" onClick={() => {setIsOpen(false); setPageTitle("Student Setup")}}>Student Setup</MDBNavLink>
+                    </MDBNavItem>}
+                    {loggedInUser ? navLoggedIn() : navLoggedOut()}
                 </MDBNavbarNav>
             </MDBCollapse>
         </MDBNavbar>

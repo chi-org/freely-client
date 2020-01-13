@@ -1,8 +1,7 @@
-import axios from "axios"
+import axios from "axios";
 
 export default axios.create({
-  // Development URL
-  baseURL: 'http://localhost:3030/',
-  timeout: 10000,
-  withCredentials: true
-})
+    baseURL: process.env.SERVER_URI || "http://localhost:3030/API/",
+    withCredentials: true,
+    timeout: 4000
+});
