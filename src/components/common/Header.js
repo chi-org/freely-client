@@ -6,9 +6,9 @@ export default () => {
     const [pageTitle, setPageTitle] = useState("Activities");
 
     return (
-        <MDBNavbar light expand="md">
-            <MDBNavbarBrand center className="d-block d-md-none">{pageTitle}</MDBNavbarBrand>
-            <MDBNavbarToggler onClick={() => setIsOpen(!isOpen)} />
+        <MDBNavbar light>
+            <MDBNavbarBrand >{pageTitle}</MDBNavbarBrand>
+            <MDBNavbarToggler onClick={() => {console.log("isOpen:", isOpen); setIsOpen(!isOpen)}} />
 
             <MDBCollapse isOpen={isOpen} navbar>
                 <MDBNavbarNav left>
