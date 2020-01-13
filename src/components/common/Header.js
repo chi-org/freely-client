@@ -19,11 +19,9 @@ const Header = () => {
 
     function navLoggedIn() {
         return (
-            <Fragment>
-                <MDBNavItem>
-                    Logged in
-                </MDBNavItem>
-            </Fragment>
+            <MDBNavItem>
+                Logged in as ,<MDBNavLink to="#">Log out</MDBNavLink>
+            </MDBNavItem>
         )
     }
 
@@ -31,7 +29,10 @@ const Header = () => {
         return (
             <Fragment>
                 <MDBNavItem>
-                    Logged out
+                    <MDBNavLink to="/login">Log in</MDBNavLink>
+                </MDBNavItem>
+                <MDBNavItem>
+                    <MDBNavLink to="/register">Register</MDBNavLink>
                 </MDBNavItem>
             </Fragment>
         )
@@ -55,6 +56,8 @@ const Header = () => {
                     {pageTitle !== "Student Setup" && <MDBNavItem>
                         <MDBNavLink to="/students" onClick={() => {setIsOpen(false); setPageTitle("Student Setup")}}>Student Setup</MDBNavLink>
                     </MDBNavItem>}
+                </MDBNavbarNav>
+                <MDBNavbarNav right>
                     {loggedInUser ? navLoggedIn() : navLoggedOut()}
                 </MDBNavbarNav>
             </MDBCollapse>
