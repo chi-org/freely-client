@@ -1,13 +1,11 @@
 import React, {Fragment, useState} from "react";
-import { NavLink, Redirect } from "react-router-dom"
-import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, MDBNavItem, MDBBtn, MDBNavLink} from "mdbreact";
+import { Redirect } from "react-router-dom"
+import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, MDBNavItem, MDBNavLink} from "mdbreact";
 import {useGlobalState} from "../../config/store";
 import {logoutUser, setLoggedInUser} from "../../services/authServices"
 
-const Header = (props) => {
-    // const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+const Header = () => {
 
-        // handles logout
 	function handleLogout() {
 		logoutUser()
 		dispatch({

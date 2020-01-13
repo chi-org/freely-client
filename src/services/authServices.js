@@ -13,7 +13,6 @@ export async function registerUser(userData) {
       throw(error)
 
   }
-  return true
 }
 
 export async function loginUser(userData) {
@@ -27,7 +26,6 @@ export async function loginUser(userData) {
     console.log("Login Error: ", error)
     throw(error)
   }
-  return true
 }
 
 export async function logoutUser() {
