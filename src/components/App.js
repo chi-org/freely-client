@@ -1,5 +1,5 @@
 import React,{ useReducer, useEffect} from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import Login from "./auth/Login"
 import Register from "./auth/Register"
 import Header from "./common/Header";
@@ -38,22 +38,23 @@ export default () => {
 					data: null
 				})
 			})
+			return () =>{}
 		}, [])
 
-  // // Use reducer hook to handle state items
-	// const [loggedInUser, dispatchLoggedInUser] = useReducer(stateReducer, null)
-	const [loginError, dispatchLoginError] = useReducer(stateReducer, null)
   return (
     <div>
 
 			<StateContext.Provider value={{store,dispatch}} >
       <BrowserRouter>
 			<Header />
+			<Switch>
         <Route exact path="/activities" render={() => <Activities />} />
         <Route exact path="/activities/new" render={() => <NewActivity />} />
         <Route exact path="/activities/search" render={() => <ActivitySearch />} />
         <Route exact path="/students" render={() => <Students />} />
-        <Route exact path="/auth/login" render={ (props) => <Login /> }/>
+        <Route exact path="/auth/login" component={Login }/>
+
+				</Switch>
       </BrowserRouter>
 			</StateContext.Provider>
     </div>

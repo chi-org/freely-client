@@ -2,7 +2,7 @@ import api from "../config/api"
 
 
 export async function registerUser(userData) {
-  const {username, password} = userData
+  // const {username, password} = userData
   try {
       const response = await api.post("/auth/register", userData)
       console.log(userData.username, " back from server", response)

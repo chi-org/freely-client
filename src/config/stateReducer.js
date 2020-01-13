@@ -1,7 +1,10 @@
 export default function (state, action) {
   switch(action.type) {
       case "setLoggedInUser": {
-          return action.data
+          return {
+              ...state,
+          loggedInUser: action.data
+          }
       }
       case "setLoginError": {
           return action.data
