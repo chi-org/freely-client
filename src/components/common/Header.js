@@ -65,10 +65,3 @@ export default () => {
         </MDBNavbar>
     )
 }
-<<<<<<< HEAD
-
-export default Header
-
-
-=======
->>>>>>> 139da89f8369cbb27009c224cdf057929803d47d
