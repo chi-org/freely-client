@@ -20,7 +20,7 @@ export default () => {
     function navLoggedIn() {
         return (
             <MDBNavItem>
-                Logged in as ,<MDBNavLink to="#">Log out</MDBNavLink>
+                <MDBNavLink to="#">Log out</MDBNavLink>
             </MDBNavItem>
         )
     }
