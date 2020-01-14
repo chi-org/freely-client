@@ -4,7 +4,7 @@ import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, 
 import {useGlobalState} from "../../config/store";
 import {logoutUser, setLoggedInUser} from "../../services/authServices"
 
-const Header = () => {
+export default () => {
 
 	function handleLogout() {
 		logoutUser()
@@ -19,11 +19,9 @@ const Header = () => {
 
     function navLoggedIn() {
         return (
-            <Fragment>
-                <MDBNavItem>
-                    Logged in
-                </MDBNavItem>
-            </Fragment>
+            <MDBNavItem>
+                Logged in as ,<MDBNavLink to="#">Log out</MDBNavLink>
+            </MDBNavItem>
         )
     }
 
@@ -31,7 +29,10 @@ const Header = () => {
         return (
             <Fragment>
                 <MDBNavItem>
-                    Logged out
+                    <MDBNavLink to="/login">Log in</MDBNavLink>
+                </MDBNavItem>
+                <MDBNavItem>
+                    <MDBNavLink to="/register">Register</MDBNavLink>
                 </MDBNavItem>
             </Fragment>
         )
@@ -55,24 +56,11 @@ const Header = () => {
                     {pageTitle !== "Student Setup" && <MDBNavItem>
                         <MDBNavLink to="/students" onClick={() => {setIsOpen(false); setPageTitle("Student Setup")}}>Student Setup</MDBNavLink>
                     </MDBNavItem>}
+                </MDBNavbarNav>
+                <MDBNavbarNav right>
                     {loggedInUser ? navLoggedIn() : navLoggedOut()}
                 </MDBNavbarNav>
             </MDBCollapse>
         </MDBNavbar>
     )
 }
-
-export default Header
-
-
-// <MDBNavItem active>
-// <MDBNavbarBrand>Student Setup</MDBNavbarBrand>
-// </MDBNavItem>
-// <MDBNavItem>
-// <MDBBtn href="/auth/login" color="primary">Login</MDBBtn>
-// {/* {!isAuthenticated && (
-// <button onClick={() => loginWithRedirect({})}>Log in</button>
-// )}
-
-// {isAuthenticated && <button onClick={() => logout()}>Log out</button>} */}
-// </MDBNavItem>
