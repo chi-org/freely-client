@@ -3,6 +3,7 @@ import api from "../config/api"
 
 export async function registerUser(userData) {
   // const {username, password} = userData
+  console.log(userData)
   try {
       const response = await api.post("/auth/register", userData)
       console.log(userData.username, " back from server", response)
@@ -13,7 +14,6 @@ export async function registerUser(userData) {
       throw(error)
 
   }
-  return true
 }
 
 export async function loginUser(userData) {
@@ -27,7 +27,6 @@ export async function loginUser(userData) {
     console.log("Login Error: ", error)
     throw(error)
   }
-  return true
 }
 
 export async function logoutUser() {

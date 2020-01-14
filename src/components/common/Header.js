@@ -1,13 +1,11 @@
 import React, {Fragment, useState} from "react";
-import { NavLink, Redirect } from "react-router-dom"
-import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, MDBNavItem, MDBBtn} from "mdbreact";
+import { Redirect } from "react-router-dom"
+import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, MDBNavItem, MDBNavLink} from "mdbreact";
 import {useGlobalState} from "../../config/store";
 import {logoutUser, setLoggedInUser} from "../../services/authServices"
 
-const Header = (props) => {
-    // const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+export default () => {
 
-        // handles logout
 	function handleLogout() {
 		logoutUser()
 		dispatch({
@@ -21,11 +19,9 @@ const Header = (props) => {
 
     function navLoggedIn() {
         return (
-            <Fragment>
-                <MDBNavItem>
-                    Logged in
-                </MDBNavItem>
-            </Fragment>
+            <MDBNavItem>
+                <MDBNavLink to="#">Log out</MDBNavLink>
+            </MDBNavItem>
         )
     }
 
@@ -33,35 +29,46 @@ const Header = (props) => {
         return (
             <Fragment>
                 <MDBNavItem>
-                    Logged out
+                    <MDBNavLink to="/login">Log in</MDBNavLink>
+                </MDBNavItem>
+                <MDBNavItem>
+                    <MDBNavLink to="/register">Register</MDBNavLink>
                 </MDBNavItem>
             </Fragment>
         )
     }
     const [isOpen, setIsOpen] = useState(false);
+    const [pageTitle, setPageTitle] = useState("Activities");
 
     const { store, dispatch } = useGlobalState()
     const {loggedInUser} = store
 
     return (
-        // use for desktop navbar, commented for testing mobile layout
-        // <MDBNavbar light expand="md">
-        // Mobile layout
-        <MDBNavbar light>
-            <MDBNavbarBrand centerrenderAs="p">{loggedInUser || "Freely"}</MDBNavbarBrand>
-            <MDBNavbarToggler onClick={() => {console.log("isOpen:", isOpen); setIsOpen(!isOpen)}} />
+        <MDBNavbar light expand="md">
+            <MDBNavbarBrand center="true">{pageTitle}</MDBNavbarBrand>
+            <MDBNavbarToggler onClick={() => setIsOpen(!isOpen)} />
 
             <MDBCollapse isOpen={isOpen} navbar>
 
                 <MDBNavbarNav left>
-
-                {loggedInUser ? navLoggedIn() : navLoggedOut()}
+                    {pageTitle !== "Activities" && <MDBNavItem>
+                        <MDBNavLink to="/activities" onClick={() => {setIsOpen(false); setPageTitle("Activities")}}>Activities</MDBNavLink>
+                    </MDBNavItem>}
+                    {pageTitle !== "Student Setup" && <MDBNavItem>
+                        <MDBNavLink to="/students" onClick={() => {setIsOpen(false); setPageTitle("Student Setup")}}>Student Setup</MDBNavLink>
+                    </MDBNavItem>}
+                </MDBNavbarNav>
+                <MDBNavbarNav right>
+                    {loggedInUser ? navLoggedIn() : navLoggedOut()}
                 </MDBNavbarNav>
             </MDBCollapse>
         </MDBNavbar>
     )
 }
+<<<<<<< HEAD
 
 export default Header
 
 
+=======
+>>>>>>> 139da89f8369cbb27009c224cdf057929803d47d

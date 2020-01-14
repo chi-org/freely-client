@@ -30,7 +30,7 @@ const Login = props => {
 	}
 
 	return (
-		<form data-cy="loginForm"onSubmit={(event) => handleLogin(event)}>
+		<form data-cy="loginForm" onSubmit={(event) => handleLogin(event)}>
 			{ loginError && <p className="has-text-danger">{ loginError }</p> }
 			<label className="label">Username</label>
 			<input data-cy="username"type="text" className="input" name="username" placeholder="Username" required></input>
