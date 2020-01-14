@@ -4,7 +4,7 @@ import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, 
 import {useGlobalState} from "../../config/store";
 import {logoutUser, setLoggedInUser} from "../../services/authServices"
 
-const Header = () => {
+export default () => {
 
 	function handleLogout() {
 		logoutUser()
@@ -64,18 +64,3 @@ const Header = () => {
         </MDBNavbar>
     )
 }
-
-export default Header
-
-
-// <MDBNavItem active>
-// <MDBNavbarBrand>Student Setup</MDBNavbarBrand>
-// </MDBNavItem>
-// <MDBNavItem>
-// <MDBBtn href="/auth/login" color="primary">Login</MDBBtn>
-// {/* {!isAuthenticated && (
-// <button onClick={() => loginWithRedirect({})}>Log in</button>
-// )}
-
-// {isAuthenticated && <button onClick={() => logout()}>Log out</button>} */}
-// </MDBNavItem>
