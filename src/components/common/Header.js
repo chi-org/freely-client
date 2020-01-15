@@ -20,7 +20,7 @@ export default () => {
     function navLoggedIn() {
         return (
             <MDBNavItem>
-                <MDBNavLink to="#">Log out</MDBNavLink>
+                <MDBNavLink to="#" onClick={() => {setIsOpen(false); window.location.reload();}}>Log out</MDBNavLink>
             </MDBNavItem>
         )
     }
@@ -29,10 +29,10 @@ export default () => {
         return (
             <Fragment>
                 <MDBNavItem>
-                    <MDBNavLink to="/login">Log in</MDBNavLink>
+                    <MDBNavLink to="/login" onClick={() => {setIsOpen(false); setPageTitle("Login")}}>Log in</MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem>
-                    <MDBNavLink to="/register">Register</MDBNavLink>
+                    <MDBNavLink to="/register" onClick={() => {setIsOpen(false); setPageTitle("Register")}}>Register</MDBNavLink>
                 </MDBNavItem>
             </Fragment>
         )
@@ -52,6 +52,7 @@ export default () => {
 
                 <MDBNavbarNav left>
                     {pageTitle !== "Activities" && <MDBNavItem>
+                        {/* // remove to use as a link to activities refresh */}
                         <MDBNavLink to="/activities" onClick={() => {setIsOpen(false); setPageTitle("Activities")}}>Activities</MDBNavLink>
                     </MDBNavItem>}
                     {pageTitle !== "Student Setup" && <MDBNavItem>

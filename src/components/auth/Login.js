@@ -1,11 +1,14 @@
 import React, { useState } from "react"
 import {useGlobalState} from "../../config/store"
 import { loginUser, setLoggedInUser } from "../../services/authServices"
+import { MDBContainer,MDBRow,MDBCol,MDBInput,MDBBtn } from "mdbreact"
+import {useHistory} from "react-router-dom"
 
 const Login = props => {
 
 	const { dispatch } = useGlobalState();
-	const [loginError, setLoginError] = useState(null)
+	const [loginError, setLoginError] = useState(null);
+	const history = useHistory;
 
 	// handles login
 	function handleLogin(event) {
@@ -21,7 +24,7 @@ const Login = props => {
 			})
 			setLoggedInUser(username)
 			setLoginError("success!")
-			// props.history.push("../");
+			props.history.push("../");
 		}).catch((error) => {
 			const status = error.response ? error.response.status : 500
 			console.log(`An error occurred authenticating: ${error} with status: ${status}`)
@@ -30,14 +33,39 @@ const Login = props => {
 	}
 
 	return (
-		<form data-cy="loginForm" onSubmit={(event) => handleLogin(event)}>
-			{ loginError && <p className="has-text-danger">{ loginError }</p> }
-			<label className="label">Username</label>
-			<input data-cy="username"type="text" className="input" name="username" placeholder="Username" required></input>
-			<label className="label">Password</label>
-			<input data-cy="password"type="password" className="input" name="password" placeholder="Password" required></input>
-			<input data-cy="loginButton" type="submit" value="Login" className="button is-info"></input>
-		</form>
+	<MDBContainer>
+	<MDBRow pt="2">
+		<MDBCol md="6" xl="6">
+				<form data-cy="loginForm" onSubmit={(event) => handleLogin(event)}>
+				<p className="pt-3 h5 text-center mb-4">Sign in</p>
+				{ loginError && <p className="has-text-danger">{ loginError }</p> }
+				<div className="grey-text">
+					<MDBInput
+						label="Type your email"
+						icon="envelope"
+						group
+						type="email"
+						name="username"
+						validate
+						error="wrong"
+						success="right"
+					/>
+					<MDBInput
+						label="Type your password"
+						icon="lock"
+						group
+						type="password"
+						name="password"
+						validate
+					/>
+				</div>
+				<div className="text-center">
+					<MDBBtn type="submit" value="Login" >Login</MDBBtn>
+				</div>
+			</form>
+		</MDBCol>
+	</MDBRow>
+	</MDBContainer>
 	)
 }
 
