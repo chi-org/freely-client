@@ -21,12 +21,6 @@ export default () => {
   const initialState = {loggedInUser: null, activities: []};
   const [store, dispatch] = useReducer(stateReducer,initialState);
 
-  const getActivities = () => {
-    getAllActivities()
-    .then((response) => setActivities(response.data.activities))
-    .catch((error) => console.log(error))
-  }
-
   useEffect(()=> {
 			// If we have login information persisted and we're still logged into the server, set the state
 			userAuthenticated().then(() => {
@@ -34,6 +28,7 @@ export default () => {
 					type: "setLoggedInUser",
 					data: getLoggedInUser()
 				});
+        
 			}).catch((error) => {
 				console.log("got an error trying to check authenticated user:", error)
 				setLoggedInUser(null)
@@ -42,15 +37,13 @@ export default () => {
 					data: null
 				})
       });
-
-      getActivities();
       
 			return () =>{}
 		}, []);
 
   return (
     <div>
-      <StateContext.Provider value={{store,dispatch}} >
+      <StateContext.Provider value={{store, dispatch}} >
         <BrowserRouter>
           <Route path="/" render={() => <Header />} />
           <Route exact path="/" render={() => <Redirect to="/activities" />} />
@@ -58,7 +51,7 @@ export default () => {
           <Route exact path="/activities/new" render={() => <NewActivity activities={activities} />} />
           <Route exact path="/activities/search" render={() => <ActivitySearch />} />
           <Route exact path="/students" render={() => <Students />} />
-          <Route exact path="/login" render={() => <Login />} />
+          <Route exact path="/login" render={() => <Login setActivities={setActivities} />} />
           <Route exact path="/register" render={() => <Register />} />
         </BrowserRouter>
       </StateContext.Provider>
