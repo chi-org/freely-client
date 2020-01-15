@@ -1,7 +1,7 @@
 import React from "react"
 import {useGlobalState} from "../../config/store"
 import { logoutUser, setLoggedInUser } from "../../services/authServices"
-import { MDBInput, MDBBtn, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter, MDBAlert } from "mdbreact"
+import { MDBBtn, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from "mdbreact"
 import { useHistory } from "react-router-dom";
 
 export default ({showLogout, setShowLogout}) => {
