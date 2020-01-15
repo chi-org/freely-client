@@ -1,14 +1,14 @@
 import React, { useState } from "react"
 import {useGlobalState} from "../../config/store"
 import { loginUser, setLoggedInUser } from "../../services/authServices"
-import { MDBContainer,MDBRow,MDBCol,MDBInput,MDBBtn } from "mdbreact"
-import {useHistory} from "react-router-dom"
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact"
+import { useHistory } from "react-router-dom";
 
-const Login = props => {
+const Login = ({setActivities}) => {
 
 	const { dispatch } = useGlobalState();
 	const [loginError, setLoginError] = useState(null);
-	const history = useHistory;
+	const history = useHistory();
 
 	// handles login
 	function handleLogin(event) {
@@ -17,21 +17,27 @@ const Login = props => {
 		const username = form.elements.username.value
 		const password = form.elements.password.value
 
-		loginUser({username: username, password: password}).then(() => {
+		loginUser({username: username, password: password}).then((response) => {
+
+			console.log(response);
+
+			setActivities(response.activities);
+
 			dispatch({
 				type: "setLoggedInUser",
 				data: username
 			})
-			setLoggedInUser(username)
+
+			setLoggedInUser(username);
 			setLoginError("success!")
-			props.history.push("../");
+
+			history.push("../");
 		}).catch((error) => {
 			const status = error.response ? error.response.status : 500
 			console.log(`An error occurred authenticating: ${error} with status: ${status}`)
 			setLoginError("Authentication failed! Check your username and password")
 		})
 	}
-
 	return (
 	<MDBContainer>
 	<MDBRow pt="2">
@@ -67,6 +73,7 @@ const Login = props => {
 	</MDBRow>
 	</MDBContainer>
 	)
+
 }
 
 export default Login
