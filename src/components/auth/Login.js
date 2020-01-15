@@ -4,7 +4,7 @@ import { MDBContainer, MDBInput, MDBBtn } from "mdbreact";
 import { loginUser, setLoggedInUser } from "../../services/authServices"
 import { useHistory } from "react-router-dom";
 
-const Login = ({activities, setActivities}) => {
+const Login = ({setActivities}) => {
 
 	const { dispatch } = useGlobalState();
 	const [loginError, setLoginError] = useState(null);
@@ -20,14 +20,15 @@ const Login = ({activities, setActivities}) => {
 		loginUser({username: username, password: password}).then((response) => {
 
 			console.log(response);
-			
+
 			setActivities(response.activities);
 			
 			dispatch({
 				type: "setLoggedInUser",
 				data: username
 			})
-			setLoggedInUser(username)
+
+			setLoggedInUser(username);
 			setLoginError("success!")
 
 			history.push("../");

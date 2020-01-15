@@ -27,7 +27,11 @@ export default () => {
 				dispatch({
 					type: "setLoggedInUser",
 					data: getLoggedInUser()
-				});
+        });
+        
+        getAllActivities()
+          .then((response) => setActivities(response.data))
+          .catch((error) => console.log(error))
         
 			}).catch((error) => {
 				console.log("got an error trying to check authenticated user:", error)
