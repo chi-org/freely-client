@@ -16,7 +16,7 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
             name: "",
             textContent: form.details.value,
             date: form.date.value || null,
-            completed: form.completed.checked,
+            completed: false,
             students: [],
             assets: []
         }
@@ -46,12 +46,6 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
         )
     }
 
-    const completed = () => {
-        return (
-            <MDBInput name="completed" style={{height: "1em"}} type='checkbox' label="Completed" />
-        )
-    }
-
     const students = () => {
         return (
             <Fragment>
@@ -62,34 +56,6 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
                     <MDBBadge pill className="student-pill click-action"><p style={{color:"gray", padding:"5px", margin:"0px"}}>Bill</p></MDBBadge>
                 </div>
             </Fragment>
-            // <Fragment>
-            //     <h4 style={{marginTop: "30px"}}>Students</h4>
-            //     <MDBBadge pill style={{marginRight: "5px"}} color="indigo">Student 1</MDBBadge>
-            //     <span className="click-action" onClick={() => setShowStudentsModal(true)} >
-            //         <MDBBadge pill style={{marginRight: "5px"}} color="white">
-            //             <MDBIcon style={{color: "black"}} icon="plus" />
-            //         </MDBBadge>
-            //     </span>
-            // </Fragment>
-        )
-    }
-
-    const studentModal = () => {
-        const students = ["Student 1", "Student 2", "Student 3"];
-
-        return (
-            <MDBModal isOpen={showStudentsModal}>
-                <MDBModalHeader toggle={() => setShowStudentsModal(false)}>Students</MDBModalHeader>
-                <MDBModalBody>
-                    <div>
-                        {students.map((student, i) => {
-                            return <span key={i} className="click-action" onClick={() => {setShowStudentsModal(false)}} style={{marginRight: "10px"}}>
-                                <MDBBadge pill color="indigo">{student}</MDBBadge>
-                            </span>
-                        })}
-                    </div>
-                </MDBModalBody>
-            </MDBModal>
         )
     }
 
@@ -124,11 +90,9 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
                 <form id="form" onSubmit={submitNewActivity}>
                 <br />
                     {details()}
-                    {/* {completed()} */}
                     {date()}
                     {students()}
                     {images()}
-                    {studentModal()}
                 </form>
             </MDBModalBody>
             <MDBModalFooter>
