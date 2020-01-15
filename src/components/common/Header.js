@@ -3,24 +3,25 @@ import { Redirect } from "react-router-dom"
 import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, MDBNavItem, MDBNavLink} from "mdbreact";
 import {useGlobalState} from "../../config/store";
 import {logoutUser, setLoggedInUser} from "../../services/authServices"
+import Login from "../auth/Login";
+import Register from "../auth/Register";
+import Logout from "../auth/Logout";
 
-export default () => {
+export default ({setActivities}) => {
 
-	function handleLogout() {
-		logoutUser()
-		dispatch({
-			type: "setLoggedInUser",
-			data:  null
-		})
-        setLoggedInUser(null)
-        setIsOpen()
-		return <Redirect to="/" />
-    }
+    const [isOpen, setIsOpen] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
+    const [showLogout, setShowLogout] = useState(false);
+    const [showRegister, setShowRegister] = useState(false);
+    const [pageTitle, setPageTitle] = useState("Activities");
+
+    const { store } = useGlobalState()
+    const {loggedInUser} = store
 
     function navLoggedIn() {
         return (
             <MDBNavItem>
-                <MDBNavLink to="#" onClick={() => {setIsOpen(false); window.location.reload();}}>Log out</MDBNavLink>
+                <MDBNavLink to="#" onClick={() => {setIsOpen(false); setShowLogout(true)}}>Log out</MDBNavLink>
             </MDBNavItem>
         )
     }
@@ -29,19 +30,14 @@ export default () => {
         return (
             <Fragment>
                 <MDBNavItem>
-                    <MDBNavLink to="/login" onClick={() => {setIsOpen(false); setPageTitle("Login")}}>Log in</MDBNavLink>
+                    <MDBNavLink to="#" onClick={() => {setIsOpen(false); setShowLogin(true)}}>Log in</MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem>
-                    <MDBNavLink to="/register" onClick={() => {setIsOpen(false); setPageTitle("Register")}}>Register</MDBNavLink>
+                    <MDBNavLink to="#" onClick={() => {setIsOpen(false); setShowRegister(true)}}>Register</MDBNavLink>
                 </MDBNavItem>
             </Fragment>
         )
     }
-    const [isOpen, setIsOpen] = useState(false);
-    const [pageTitle, setPageTitle] = useState("Activities");
-
-    const { store, dispatch } = useGlobalState()
-    const {loggedInUser} = store
 
     return (
         <MDBNavbar light expand="md">
@@ -62,6 +58,10 @@ export default () => {
                     {loggedInUser ? navLoggedIn() : navLoggedOut()}
                 </MDBNavbarNav>
             </MDBCollapse>
+
+            <Login showLogin={showLogin} setShowLogin={setShowLogin} setActivities={setActivities} />
+            <Register showRegister={showRegister} setShowRegister={setShowRegister} />
+            <Logout showLogout={showLogout} setShowLogout={setShowLogout} />
         </MDBNavbar>
     )
 }

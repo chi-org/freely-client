@@ -1,11 +1,13 @@
-import React from 'react';
-import {MDBContainer, MDBBtn, MDBIcon} from 'mdbreact';
+import React, { useState } from 'react';
+import {MDBContainer, MDBBtn, MDBIcon, MDBAlert} from 'mdbreact';
 import Activity from './Activity';
 import { useHistory } from 'react-router-dom';
+import NewActivity from './NewActivity';
 
 export default ({activities: data}) => {
 
     const history = useHistory();
+    const [showNewActivityModal, setShowNewActivityModal] = useState(false);
 
     const studentPicker = () => {
         return (
@@ -35,6 +37,7 @@ export default ({activities: data}) => {
     const activities = () => {
         return (
             <MDBContainer style={{marginTop: "30px", marginBottom: "30px"}}>
+                {data.length === 0 && <MDBAlert color="info">No activities match the search criteria</MDBAlert>}
                 {data.map((activity, i) => <Activity key={i} data={activity} />)}
             </MDBContainer>
         )
@@ -42,9 +45,15 @@ export default ({activities: data}) => {
 
     const newActivityButton = () => {
         return (
-            <MDBBtn onClick={() => history.push("/activities/new")} color="primary" style={{borderRadius: "50%", padding: "0px", width: "3em", height: "3em", margin: "0 auto 20px auto"}}>
+            <MDBBtn onClick={() => setShowNewActivityModal(true)} color="primary" style={{borderRadius: "50%", padding: "0px", width: "3em", height: "3em", margin: "0 auto 20px auto"}}>
                 <MDBIcon icon="plus" />
             </MDBBtn>
+        )
+    }
+
+    const newActivityModal = () => {
+        return (
+            <NewActivity activities={data} isOpen={showNewActivityModal} setShowNewActivityModal={setShowNewActivityModal} />
         )
     }
 
@@ -54,6 +63,7 @@ export default ({activities: data}) => {
             {activityDateRange()}
             {activities()}
             {newActivityButton()}
+            {newActivityModal()}
         </div>
     )
 }

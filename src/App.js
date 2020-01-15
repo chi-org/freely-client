@@ -3,7 +3,6 @@ import React, { useState, useReducer, useEffect } from 'react';
 
 import Header from "./components/common/Header";
 import Activities from "./components/activities/Activities";
-import NewActivity from './components/activities/NewActivity';
 import ActivitySearch from './components/activities/ActivitySearch';
 import Students from './components/students/Students';
 
@@ -21,20 +20,17 @@ export default () => {
   const initialState = {loggedInUser: null, activities: []};
   const [store, dispatch] = useReducer(stateReducer,initialState);
 
-  useEffect(()=> {
+  useEffect(() => {
 			// If we have login information persisted and we're still logged into the server, set the state
 			userAuthenticated().then(() => {
-				dispatch({
-					type: "setLoggedInUser",
-					data: getLoggedInUser()
-        });
         
         getAllActivities()
           .then((response) => setActivities(response.data))
           .catch((error) => console.log(error))
         
 			}).catch((error) => {
-				console.log("got an error trying to check authenticated user:", error)
+        console.log("got an error trying to check authenticated user:", error)
+        
 				setLoggedInUser(null)
 				dispatch({
 					type: "setLoggedInUser",
@@ -49,14 +45,11 @@ export default () => {
     <div>
       <StateContext.Provider value={{store, dispatch}} >
         <BrowserRouter>
-          <Route path="/" render={() => <Header />} />
+          <Route path="/" render={() => <Header setActivities={setActivities} />} />
           <Route exact path="/" render={() => <Redirect to="/activities" />} />
           <Route exact path="/activities" render={() => <Activities activities={activities} />} />
-          <Route exact path="/activities/new" render={() => <NewActivity activities={activities} />} />
           <Route exact path="/activities/search" render={() => <ActivitySearch />} />
           <Route exact path="/students" render={() => <Students />} />
-          <Route exact path="/login" render={() => <Login setActivities={setActivities} />} />
-          <Route exact path="/register" render={() => <Register />} />
         </BrowserRouter>
       </StateContext.Provider>
     </div>

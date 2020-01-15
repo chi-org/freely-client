@@ -1,13 +1,13 @@
 import React, { useState } from "react"
 import {useGlobalState} from "../../config/store"
 import { loginUser, setLoggedInUser } from "../../services/authServices"
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact"
+import { MDBInput, MDBBtn, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter, MDBAlert } from "mdbreact"
 import { useHistory } from "react-router-dom";
 
-const Login = ({setActivities}) => {
+export default ({showLogin, setShowLogin, setActivities}) => {
 
 	const { dispatch } = useGlobalState();
-	const [loginError, setLoginError] = useState(null);
+	const [loginError, setLoginError] = useState("");
 	const history = useHistory();
 
 	// handles login
@@ -17,63 +17,38 @@ const Login = ({setActivities}) => {
 		const username = form.elements.username.value
 		const password = form.elements.password.value
 
-		loginUser({username: username, password: password}).then((response) => {
-
-			console.log(response);
-
+		loginUser({username: form.username.value, password: form.password.value}).then((response) => {
+			console.log(response)
 			setActivities(response.activities);
-
-			dispatch({
-				type: "setLoggedInUser",
-				data: username
-			})
-
+			dispatch({type: "setLoggedInUser", data: username});
 			setLoggedInUser(username);
-			setLoginError("success!")
-
-			history.push("../");
+			setShowLogin(false);
+			history.push("/");
 		}).catch((error) => {
-			const status = error.response ? error.response.status : 500
-			console.log(`An error occurred authenticating: ${error} with status: ${status}`)
-			setLoginError("Authentication failed! Check your username and password")
+			console.log(`An error occurred authenticating: ${error} with status: ${error.response.status || 500}`)
+			setLoginError("There was an error logging in. Please check your credentials and try again.")
 		})
 	}
+
+    const dismiss = () => {
+        setLoginError("");
+        setShowLogin(false);
+    }
+
 	return (
-	<MDBContainer>
-	<MDBRow pt="2">
-		<MDBCol md="6" xl="6">
-				<form data-cy="loginForm" onSubmit={handleLogin}>
-				<p className="pt-3 h5 text-center mb-4">Sign in</p>
-				{ loginError && <p className="has-text-danger">{ loginError }</p> }
-				<div className="grey-text">
-					<MDBInput
-						label="Type your email"
-						icon="envelope"
-						group
-						// type="email"
-						name="username"
-						validate
-						error="wrong"
-						success="right"
-					/>
-					<MDBInput
-						label="Type your password"
-						icon="lock"
-						group
-						type="password"
-						name="password"
-						validate
-					/>
-				</div>
-				<div className="text-center">
-					<MDBBtn type="submit" color="primary" >Login</MDBBtn>
-				</div>
-			</form>
-		</MDBCol>
-	</MDBRow>
-	</MDBContainer>
+		<MDBModal toggle={dismiss} isOpen={showLogin}>
+			<MDBModalHeader toggle={dismiss}>Login</MDBModalHeader>
+			<MDBModalBody>
+				{loginError && <MDBAlert color="danger">{loginError}</MDBAlert>}
+				<form id="form" onSubmit={handleLogin}>
+					<MDBInput icon="user" size="sm" name="username" label="username" />
+					<MDBInput icon="lock" size="sm" name="password" type="password" label="password" />
+				</form>
+			</MDBModalBody>
+			<MDBModalFooter>
+				<MDBBtn color="secondary" onClick={dismiss}>Cancel</MDBBtn>
+				<MDBBtn form="form" type="submit" color="primary">Login</MDBBtn>
+			</MDBModalFooter>
+		</MDBModal>
 	)
-
 }
-
-export default Login
