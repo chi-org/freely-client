@@ -42,7 +42,7 @@ const Login = ({setActivities}) => {
 	<MDBContainer>
 	<MDBRow pt="2">
 		<MDBCol md="6" xl="6">
-				<form data-cy="loginForm" onSubmit={(event) => handleLogin(event)}>
+				<form data-cy="loginForm" onSubmit={handleLogin}>
 				<p className="pt-3 h5 text-center mb-4">Sign in</p>
 				{ loginError && <p className="has-text-danger">{ loginError }</p> }
 				<div className="grey-text">
@@ -50,7 +50,7 @@ const Login = ({setActivities}) => {
 						label="Type your email"
 						icon="envelope"
 						group
-						type="email"
+						// type="email"
 						name="username"
 						validate
 						error="wrong"
@@ -66,7 +66,7 @@ const Login = ({setActivities}) => {
 					/>
 				</div>
 				<div className="text-center">
-					<MDBBtn type="submit" value="Login" >Login</MDBBtn>
+					<MDBBtn type="submit" color="primary" >Login</MDBBtn>
 				</div>
 			</form>
 		</MDBCol>
