@@ -52,7 +52,6 @@ export default () => {
 
                 <MDBNavbarNav left>
                     {pageTitle !== "Activities" && <MDBNavItem>
-                        {/* // remove to use as a link to activities refresh */}
                         <MDBNavLink to="/activities" onClick={() => {setIsOpen(false); setPageTitle("Activities")}}>Activities</MDBNavLink>
                     </MDBNavItem>}
                     {pageTitle !== "Student Setup" && <MDBNavItem>
