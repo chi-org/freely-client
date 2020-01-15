@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import {useGlobalState} from "../../config/store"
+import { MDBContainer, MDBInput, MDBBtn } from "mdbreact";
 import { loginUser, setLoggedInUser } from "../../services/authServices"
 
 const Login = props => {
@@ -28,17 +29,16 @@ const Login = props => {
 			setLoginError("Authentication failed! Check your username and password")
 		})
 	}
-
 	return (
-		<form data-cy="loginForm" onSubmit={(event) => handleLogin(event)}>
-			{ loginError && <p className="has-text-danger">{ loginError }</p> }
-			<label className="label">Username</label>
-			<input data-cy="username"type="text" className="input" name="username" placeholder="Username" required></input>
-			<label className="label">Password</label>
-			<input data-cy="password"type="password" className="input" name="password" placeholder="Password" required></input>
-			<input data-cy="loginButton" type="submit" value="Login" className="button is-info"></input>
-		</form>
+		<MDBContainer>
+			<form onSubmit={handleLogin}>
+				<MDBInput name="username" label="username" />
+				<MDBInput name="password" type="password" label="password" />
+				<MDBBtn type="submit" color="primary">Login</MDBBtn>
+			</form>
+		</MDBContainer>
 	)
+
 }
 
 export default Login
