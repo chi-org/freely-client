@@ -17,7 +17,7 @@ export async function registerUser(userData) {
 }
 
 export async function loginUser(userData) {
-  const {username, password} = userData
+  // const {username, password} = userData
   try {
     const response = await api.post("auth/login", userData)
     console.log(userData.username, " back from server")

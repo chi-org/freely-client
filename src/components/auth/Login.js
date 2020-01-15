@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import {useGlobalState} from "../../config/store"
-import { MDBContainer, MDBInput, MDBBtn } from "mdbreact";
 import { loginUser, setLoggedInUser } from "../../services/authServices"
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact"
 import { useHistory } from "react-router-dom";
 
 const Login = ({setActivities}) => {
@@ -22,7 +22,7 @@ const Login = ({setActivities}) => {
 			console.log(response);
 
 			setActivities(response.activities);
-			
+
 			dispatch({
 				type: "setLoggedInUser",
 				data: username
@@ -39,13 +39,39 @@ const Login = ({setActivities}) => {
 		})
 	}
 	return (
-		<MDBContainer>
-			<form onSubmit={handleLogin}>
-				<MDBInput name="username" label="username" />
-				<MDBInput name="password" type="password" label="password" />
-				<MDBBtn type="submit" color="primary">Login</MDBBtn>
+	<MDBContainer>
+	<MDBRow pt="2">
+		<MDBCol md="6" xl="6">
+				<form data-cy="loginForm" onSubmit={handleLogin}>
+				<p className="pt-3 h5 text-center mb-4">Sign in</p>
+				{ loginError && <p className="has-text-danger">{ loginError }</p> }
+				<div className="grey-text">
+					<MDBInput
+						label="Type your email"
+						icon="envelope"
+						group
+						// type="email"
+						name="username"
+						validate
+						error="wrong"
+						success="right"
+					/>
+					<MDBInput
+						label="Type your password"
+						icon="lock"
+						group
+						type="password"
+						name="password"
+						validate
+					/>
+				</div>
+				<div className="text-center">
+					<MDBBtn type="submit" color="primary" >Login</MDBBtn>
+				</div>
 			</form>
-		</MDBContainer>
+		</MDBCol>
+	</MDBRow>
+	</MDBContainer>
 	)
 
 }
