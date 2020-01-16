@@ -1,9 +1,22 @@
-import React from 'react';
-import { MDBContainer } from 'mdbreact';
-import StudentCard from './StudentCard';
-import AddStudentCard from './AddStudentCard';
+import React, { useState } from "react";
+import { MDBContainer } from "mdbreact";
+import StudentCard from "./StudentCard";
+import AddStudentCard from "./AddStudentCard";
+import { useHistory } from "react-router-dom";
 
-export default () => {
+export default ({students: data}) => {
+
+    const history = useHistory();
+
+
+    const students = () => {
+        return (
+            <MDBContainer>
+                {data.map((student, i) => <StudentCard key={i} data={student} />)}
+            </MDBContainer>
+        )
+    }
+
     return (
         <MDBContainer style={{marginTop: "30px", marginBottom: "30px"}}>
             <StudentCard name={'Ben'} color={"#317821"} />

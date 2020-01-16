@@ -1,7 +1,8 @@
 import React from 'react';
 import { MDBCard, MDBIcon, MDBCardBody } from 'mdbreact';
 
-export default (props) => {
+export default ({data}) => {
+
     return (
         <MDBCard style={{marginBottom: "6px"}}>
             <MDBCardBody>
