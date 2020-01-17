@@ -11,11 +11,12 @@ import { userAuthenticated, setLoggedInUser, getLoggedInUser } from "./services/
 import { StateContext } from "./config/store";
 
 import { getAllActivities } from './services/activity_services';
+import { getStudents } from "./services/student_services";
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 
 export default () => {
-  const [activities, setActivities] = useState([]);
+  const [activities, setActivities, students, setStudents] = useState([]);
 
   const initialState = {loggedInUser: null, activities: []};
   const [store, dispatch] = useReducer(stateReducer,initialState);
@@ -29,6 +30,8 @@ export default () => {
           .catch((error) => console.log(error))
 
         getStudents()
+        .then((response) => setStudents(response.data))
+        .catch((error) => console.log(error))
 
 			}).catch((error) => {
         console.log("got an error trying to check authenticated user:", error)
