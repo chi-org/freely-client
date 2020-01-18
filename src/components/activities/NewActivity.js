@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { MDBContainer, MDBIcon, MDBBtn, MDBInput, MDBBadge, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from 'mdbreact';
+import { MDBIcon, MDBBtn, MDBInput, MDBBadge, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from 'mdbreact';
 import { useHistory } from 'react-router-dom';
 import {submitNewActivity as addNewActivity} from '../../services/activity_services';
 
@@ -16,7 +16,6 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
             name: "",
             textContent: form.details.value,
             date: form.date.value || null,
-            completed: form.completed.checked,
             students: [],
             assets: []
         }
@@ -62,15 +61,6 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
                     <MDBBadge pill className="student-pill click-action"><p style={{color:"gray", padding:"5px", margin:"0px"}}>Bill</p></MDBBadge>
                 </div>
             </Fragment>
-            // <Fragment>
-            //     <h4 style={{marginTop: "30px"}}>Students</h4>
-            //     <MDBBadge pill style={{marginRight: "5px"}} color="indigo">Student 1</MDBBadge>
-            //     <span className="click-action" onClick={() => setShowStudentsModal(true)} >
-            //         <MDBBadge pill style={{marginRight: "5px"}} color="white">
-            //             <MDBIcon style={{color: "black"}} icon="plus" />
-            //         </MDBBadge>
-            //     </span>
-            // </Fragment>
         )
     }
 
