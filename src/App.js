@@ -7,7 +7,7 @@ import ActivitySearch from './components/activities/ActivitySearch';
 import Students from './components/students/Students';
 
 import stateReducer from "./config/stateReducer";
-import { userAuthenticated, setLoggedInUser } from "./services/authServices";
+import { userAuthenticated, setLoggedInUser, getLoggedInUser } from "./services/authServices";
 import { StateContext } from "./config/store";
 
 import { getAllActivities } from './services/activity_services';
@@ -20,10 +20,11 @@ export default () => {
 
   useEffect(() => {
 	// If we have login information persisted and we're still logged into the server, set the state
-	userAuthenticated().then(() => {
-        getAllActivities()
-        .then((response) => setActivities(response.data))
-        .catch((error) => console.log(error))
+      userAuthenticated().then(() => {
+          dispatch({ type: "setLoggedInUser", data: getLoggedInUser() });
+          getAllActivities()
+          .then((response) => setActivities(response.data))
+          .catch((error) => console.log(error))
 	}).catch((error) => {
         console.log("got an error trying to check authenticated user:", error)
 		setLoggedInUser(null)
