@@ -21,7 +21,7 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
         }
         
         addNewActivity(data).then((response) => {
-            activities.push(data);
+            activities.push(response.data.data);
             history.push("/activities");
             setShowNewActivityModal(false);
         }).catch(error => {
