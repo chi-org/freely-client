@@ -16,6 +16,7 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
             name: "",
             textContent: form.details.value,
             date: form.date.value || null,
+            completed: false,
             students: [],
             assets: []
         }
