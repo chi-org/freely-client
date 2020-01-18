@@ -24,13 +24,17 @@ export default () => {
 			// If we have login information persisted and we're still logged into the server, set the state
 			userAuthenticated().then(() => {
         
+				dispatch({
+					type: "setLoggedInUser",
+					data: getLoggedInUser()
+        });
+        
         getAllActivities()
           .then((response) => setActivities(response.data))
           .catch((error) => console.log(error))
         
 			}).catch((error) => {
-        console.log("got an error trying to check authenticated user:", error)
-        
+				console.log("got an error trying to check authenticated user:", error)
 				setLoggedInUser(null)
 				dispatch({
 					type: "setLoggedInUser",
