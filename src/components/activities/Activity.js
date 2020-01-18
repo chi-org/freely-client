@@ -16,7 +16,7 @@ export default ({data}) => {
 
     const date = () => {
         const date = new Date(data.date);
-        return <MDBCardText>{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</MDBCardText>
+        return <MDBCardText>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</MDBCardText>
     }
 
     const expandLinksButton = () => {
