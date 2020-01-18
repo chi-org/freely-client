@@ -14,14 +14,11 @@ export default ({showLogin, setShowLogin, setActivities}) => {
 	function handleLogin(event) {
 		event.preventDefault()
 		const form = event.target
-		const username = form.elements.username.value
-		const password = form.elements.password.value
 
 		loginUser({username: form.username.value, password: form.password.value}).then((response) => {
-			console.log(response)
 			setActivities(response.activities);
-			dispatch({type: "setLoggedInUser", data: username});
-			setLoggedInUser(username);
+			dispatch({type: "setLoggedInUser", data: response.username});
+			setLoggedInUser(response.username);
 			setShowLogin(false);
 			history.push("/");
 		}).catch((error) => {

@@ -1,8 +1,6 @@
 import React, {Fragment, useState} from "react";
-import { Redirect } from "react-router-dom"
 import {MDBNavbar, MDBNavbarBrand, MDBNavbarToggler, MDBCollapse, MDBNavbarNav, MDBNavItem, MDBNavLink} from "mdbreact";
 import {useGlobalState} from "../../config/store";
-import {logoutUser, setLoggedInUser} from "../../services/authServices"
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 import Logout from "../auth/Logout";

@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import { MDBContainer, MDBIcon, MDBBtn, MDBInput, MDBBadge, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from 'mdbreact';
+import { MDBIcon, MDBBtn, MDBInput, MDBBadge, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from 'mdbreact';
 import { useHistory } from 'react-router-dom';
 import {submitNewActivity as addNewActivity} from '../../services/activity_services';
 
@@ -22,8 +22,9 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
         }
         
         addNewActivity(data).then((response) => {
-            activities.push(data)
+            activities.push(response.data.data);
             history.push("/activities");
+            setShowNewActivityModal(false);
         }).catch(error => {
             console.log("An error occurred during submission:", error);
         });
@@ -59,6 +60,25 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
         )
     }
 
+    const studentModal = () => {
+        const students = ["Student 1", "Student 2", "Student 3"];
+
+        return (
+            <MDBModal isOpen={showStudentsModal}>
+                <MDBModalHeader toggle={() => setShowStudentsModal(false)}>Students</MDBModalHeader>
+                <MDBModalBody>
+                    <div>
+                        {students.map((student, i) => {
+                            return <span key={i} className="click-action" onClick={() => {setShowStudentsModal(false)}} style={{marginRight: "10px"}}>
+                                <MDBBadge pill color="indigo">{student}</MDBBadge>
+                            </span>
+                        })}
+                    </div>
+                </MDBModalBody>
+            </MDBModal>
+        )
+    }
+
     const details = () => {
         return (
             <Fragment>
@@ -90,9 +110,11 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
                 <form id="form" onSubmit={submitNewActivity}>
                 <br />
                     {details()}
+                    {/* {completed()} */}
                     {date()}
                     {students()}
                     {images()}
+                    {studentModal()}
                 </form>
             </MDBModalBody>
             <MDBModalFooter>

@@ -63,7 +63,7 @@ export default ({activities: data}) => {
 
     const newActivityButton = () => {
         return (
-            <MDBBtn onClick={() => setShowNewActivityModal(true)} color="primary" style={{borderRadius: "50%", padding: "0px", width: "3em", height: "3em", margin: "0 auto 20px auto"}}>
+            <MDBBtn onClick={() => setShowNewActivityModal(true)} color="primary" style={{position:"fixed", bottom:"20px", left:"calc(50% - 1.5em)", borderRadius: "50%", padding: "0px", width: "3em", height: "3em"}}>
                 <MDBIcon icon="plus" />
             </MDBBtn>
         )
@@ -76,7 +76,7 @@ export default ({activities: data}) => {
     }
 
     return (
-        <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start"}}>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", marginBottom: "60px" }}>
             {studentPicker()}
             {activityDateRange()}
             {activities()}

@@ -11,8 +11,6 @@ import { userAuthenticated, setLoggedInUser, getLoggedInUser } from "./services/
 import { StateContext } from "./config/store";
 
 import { getAllActivities } from './services/activity_services';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
 
 export default () => {
   const [activities, setActivities] = useState([]);
@@ -21,29 +19,22 @@ export default () => {
   const [store, dispatch] = useReducer(stateReducer,initialState);
 
   useEffect(() => {
-			// If we have login information persisted and we're still logged into the server, set the state
-			userAuthenticated().then(() => {
-        
-				dispatch({
-					type: "setLoggedInUser",
-					data: getLoggedInUser()
-        });
-        
-        getAllActivities()
+	// If we have login information persisted and we're still logged into the server, set the state
+      userAuthenticated().then(() => {
+          dispatch({ type: "setLoggedInUser", data: getLoggedInUser() });
+          getAllActivities()
           .then((response) => setActivities(response.data))
           .catch((error) => console.log(error))
-        
-			}).catch((error) => {
-				console.log("got an error trying to check authenticated user:", error)
-				setLoggedInUser(null)
-				dispatch({
-					type: "setLoggedInUser",
-					data: null
-				})
-      });
-      
-			return () =>{}
-		}, []);
+	}).catch((error) => {
+        console.log("got an error trying to check authenticated user:", error)
+		setLoggedInUser(null)
+		dispatch({
+			type: "setLoggedInUser",
+			data: null
+		})
+    });
+	return () => {}
+  }, []);
 
   return (
     <div>
