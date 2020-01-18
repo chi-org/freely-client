@@ -21,8 +21,9 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
         }
         
         addNewActivity(data).then((response) => {
-            activities.push(data)
+            activities.push(data);
             history.push("/activities");
+            setShowNewActivityModal(false);
         }).catch(error => {
             console.log("An error occurred during submission:", error);
         });
