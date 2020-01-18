@@ -7,12 +7,10 @@ import ActivitySearch from './components/activities/ActivitySearch';
 import Students from './components/students/Students';
 
 import stateReducer from "./config/stateReducer";
-import { userAuthenticated, setLoggedInUser, getLoggedInUser } from "./services/authServices";
+import { userAuthenticated, setLoggedInUser } from "./services/authServices";
 import { StateContext } from "./config/store";
 
 import { getAllActivities } from './services/activity_services';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
 
 export default () => {
   const [activities, setActivities] = useState([]);

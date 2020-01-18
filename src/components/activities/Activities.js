@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import {MDBContainer, MDBBtn, MDBIcon, MDBAlert} from 'mdbreact';
 import Activity from './Activity';
-import { useHistory } from 'react-router-dom';
 import NewActivity from './NewActivity';
 
 export default ({activities: data}) => {
 
-    const history = useHistory();
     const [showNewActivityModal, setShowNewActivityModal] = useState(false);
 
     const studentPicker = () => {

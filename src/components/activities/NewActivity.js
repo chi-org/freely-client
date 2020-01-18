@@ -46,12 +46,6 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
         )
     }
 
-    const completed = () => {
-        return (
-            <MDBInput name="completed" style={{height: "1em"}} type='checkbox' label="Completed" />
-        )
-    }
-
     const students = () => {
         return (
             <Fragment>
