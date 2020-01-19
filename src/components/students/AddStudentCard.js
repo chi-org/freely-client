@@ -28,10 +28,10 @@ export default ({students}) => {
                 <form id="form" onSubmit={submitNewStudent}>
                 <div style={{display: "flex", alignItems: "center"}}>
                     <MDBIcon size="lg" icon="user" style={{marginRight: "10px"}} />
-                    <input name="name"placeholder="Enter name" style={{minWidth: "20%", marginBottom: "0px"}} />
+                    <input name="name" placeholder="Enter name" style={{minWidth: "20%", marginBottom: "0px"}} />
                 </div>
                 <div style={{display: "flex", alignItems: "center", marginTop: "30px"}}>
-                    <input name="color" type="color"  style={{maxWidth: "30px", height: "30px", padding: "0px", marginBottom: "0px", border: "none"}} />
+                    <input color="color" type="color"  style={{maxWidth: "30px", height: "30px", padding: "0px", marginBottom: "0px", border: "none"}} />
                     <p style={{marginLeft: "10px", marginBottom: "0px"}}>Color</p>
                 </div>
 
