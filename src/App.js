@@ -11,6 +11,7 @@ import { userAuthenticated, setLoggedInUser, getLoggedInUser } from "./services/
 import { StateContext } from "./config/store";
 
 import { getAllActivities } from './services/activity_services';
+import Landing from './components/common/Landing';
 
 export default () => {
   const [activities, setActivities] = useState([]);
@@ -28,10 +29,7 @@ export default () => {
 	}).catch((error) => {
         console.log("got an error trying to check authenticated user:", error)
 		setLoggedInUser(null)
-		dispatch({
-			type: "setLoggedInUser",
-			data: null
-		})
+        dispatch({ type: "setLoggedInUser", data: null });
     });
 	return () => {}
   }, []);
@@ -39,12 +37,14 @@ export default () => {
   return (
     <div>
       <StateContext.Provider value={{store, dispatch}} >
-        <BrowserRouter>
-          <Route path="/" render={() => <Header setActivities={setActivities} />} />
-          <Route exact path="/" render={() => <Redirect to="/activities" />} />
-          <Route exact path="/activities" render={() => <Activities activities={activities} />} />
-          <Route exact path="/activities/search" render={() => <ActivitySearch />} />
-          <Route exact path="/students" render={() => <Students />} />
+         <BrowserRouter>
+            <Route path="*" render={() => <Header setActivities={setActivities} />} />
+            <Route exact path="/" render={() => getLoggedInUser() ? < Redirect to="/activities" /> : <Redirect to="/landing" />} />
+            <Route exact path="/activities" render={() => <Activities activities={activities} />} />
+            <Route exact path="/activities/search" render={() => <ActivitySearch />} />
+            <Route exact path="/students" render={() => <Students />} />
+                  <Route exact path="/landing" render={() => <Landing />} />
+                  {!getLoggedInUser() && <Route path="*" render={() => <Redirect to="/landing" />} />}
         </BrowserRouter>
       </StateContext.Provider>
     </div>
