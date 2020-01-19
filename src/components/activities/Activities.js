@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {MDBContainer, MDBBtn, MDBIcon, MDBAlert} from 'mdbreact';
 import Activity from './Activity';
 import NewActivity from './NewActivity';
+import { getAllActivities } from '../../services/activity_services';
 
-export default ({activities: data}) => {
+export default ({ activities: data, setActivities }) => {
+
+    useEffect(() => {
+        getAllActivities()
+            .then((response) => setActivities(response.data))
+            .catch((error) => console.log(error))
+    });
 
     const [showNewActivityModal, setShowNewActivityModal] = useState(false);
 
