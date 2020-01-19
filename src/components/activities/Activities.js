@@ -42,6 +42,9 @@ export default ({ activities: data, setActivities }) => {
                 return date >= from && date <= to;
             }));
         }
+        else {
+            setActivitiesMatchingCriteria([]);
+        }
     }
 
     // Elements
@@ -66,7 +69,7 @@ export default ({ activities: data, setActivities }) => {
                 <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(todayActivities); setShowCustomDateSelection(false) }}>Today</MDBBtn>
                 <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(nextSevenDaysActivities); setShowCustomDateSelection(false) }}>Next 7 Days</MDBBtn>
                 <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(unscheduledActivities); setShowCustomDateSelection(false) }}>Unscheduled</MDBBtn>
-                <MDBBtn color="primary" onClick={() => setShowCustomDateSelection(true)} >
+                <MDBBtn color="primary" onClick={() => { setShowCustomDateSelection(true); setActivitiesMatchingCriteria([]) }} >
                     <MDBIcon icon="search" />
                 </MDBBtn>
             </div>
