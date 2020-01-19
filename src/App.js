@@ -16,9 +16,10 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 
 export default () => {
-  const [activities, setActivities, students, setStudents] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const [students, setStudents] = useState([]);
 
-  const initialState = {loggedInUser: null, activities: []};
+  const initialState = {loggedInUser: null, activities: [], students: []};
   const [store, dispatch] = useReducer(stateReducer,initialState);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export default () => {
 
         getStudents()
         .then((response) => setStudents(response.data))
-        .catch((error) => console.log(error))
+        .catch((error) => console.log(error), console.log('app'))
 
 			}).catch((error) => {
         console.log("got an error trying to check authenticated user:", error)
@@ -51,11 +52,11 @@ export default () => {
     <div>
       <StateContext.Provider value={{store, dispatch}} >
         <BrowserRouter>
-          <Route path="/" render={() => <Header setActivities={setActivities} />} />
+          <Route path="/" render={() => <Header setActivities={setActivities} setStudents={setStudents}/>} />
           <Route exact path="/" render={() => <Redirect to="/activities" />} />
           <Route exact path="/activities" render={() => <Activities activities={activities} />} />
           <Route exact path="/activities/search" render={() => <ActivitySearch />} />
-          <Route exact path="/students" render={() => <Students />} />
+          <Route exact path="/students" render={() => <Students students={students} />} />
         </BrowserRouter>
       </StateContext.Provider>
     </div>

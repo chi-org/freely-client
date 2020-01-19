@@ -2,7 +2,7 @@ import api from "../config/api";
 
 export const getStudents = async () => {
   try {
-    return await api.get("myStudents");
+    return await api.get("students/myStudents");
   }
   catch (error) {
     console.log(error);
@@ -12,7 +12,7 @@ export const getStudents = async () => {
 
 export const addStudent = async (data) => {
   try {
-    return await api.post("newStudent", data);
+    return await api.post("students/newStudent", data);
   }
   catch (error) {
     console.log(error);

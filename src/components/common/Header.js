@@ -7,7 +7,7 @@ import Login from "../auth/Login";
 import Register from "../auth/Register";
 import Logout from "../auth/Logout";
 
-export default ({setActivities}) => {
+export default ({setActivities, setStudents}) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
@@ -59,7 +59,7 @@ export default ({setActivities}) => {
                 </MDBNavbarNav>
             </MDBCollapse>
 
-            <Login showLogin={showLogin} setShowLogin={setShowLogin} setActivities={setActivities} />
+            <Login showLogin={showLogin} setShowLogin={setShowLogin} setActivities={setActivities} setStudents={setStudents} />
             <Register showRegister={showRegister} setShowRegister={setShowRegister} />
             <Logout showLogout={showLogout} setShowLogout={setShowLogout} />
         </MDBNavbar>
