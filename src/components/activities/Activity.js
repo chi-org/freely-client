@@ -67,7 +67,7 @@ export default ({data}) => {
             <MDBCardBody style={{display: "flex"}}>
                 <div style={{width: "70%"}}>
                     {description()}
-                    {date()}
+                    {data.date && date()}
                     {expandLinksButton()}
                     {links()}
                 </div>
