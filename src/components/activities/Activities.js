@@ -25,6 +25,10 @@ export default ({activities: data}) => {
         });
     }
 
+    const unscheduledActivities = () => {
+        return data.filter(activity => !activity.date);
+    }
+
     const [activitiesMatchingCriteria, setActivitiesMatchingCriteria] = useState(todayActivities());
 
     const studentPicker = () => {
@@ -44,7 +48,7 @@ export default ({activities: data}) => {
             <div style={{display: "flex", flexWrap: "wrap", justifyContent: "center", marginTop: "10px"}}>
                 <MDBBtn color="primary" onClick={() => setActivitiesMatchingCriteria(todayActivities)}>Today</MDBBtn>
                 <MDBBtn color="primary" onClick={() => setActivitiesMatchingCriteria(nextSevenDaysActivities)}>Next 7 Days</MDBBtn>
-                <MDBBtn color="primary" onClick={() => setActivitiesMatchingCriteria(data)}>Unscheduled</MDBBtn>
+                <MDBBtn color="primary" onClick={() => setActivitiesMatchingCriteria(unscheduledActivities)}>Unscheduled</MDBBtn>
                 <MDBBtn color="primary">
                     <MDBIcon icon="search" />
                 </MDBBtn>
