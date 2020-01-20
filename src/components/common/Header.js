@@ -36,7 +36,7 @@ export default ({ setActivities }) => {
                 </MDBNavbarNav>
                 <MDBNavbarNav right>
                     <MDBNavItem>
-                        <MDBNavLink to="#" onClick={() => { setIsOpen(false); setShowLogout(true) }}>Log out</MDBNavLink>
+                        <MDBNavLink to="#" onClick={() => { setIsOpen(false); setShowLogout(true) }} data-cy='logout'>Log out</MDBNavLink>
                     </MDBNavItem>
                 </MDBNavbarNav>
             </Fragment>

@@ -28,7 +28,7 @@ export default ({showLogout, setShowLogout}) => {
 			</MDBModalBody>
 			<MDBModalFooter>
 				<MDBBtn color="secondary" onClick={dismiss}>Cancel</MDBBtn>
-				<MDBBtn color="danger" onClick={() => {dismiss(); logout()}}>Logout</MDBBtn>
+				<MDBBtn color="danger" onClick={() => {dismiss(); logout()}} data-cy='logout-button' >Logout</MDBBtn>
 			</MDBModalFooter>
 		</MDBModal>
 	)

@@ -12,6 +12,10 @@ context("Actions", () => {
     cy.get('[data-cy="password"]').type("test")
     cy.get('[data-cy="login-button"]').click()
   })
+  afterEach(() => {
+    cy.get('[data-cy="logout"]').click()
+    cy.get('[data-cy="logout-button"]').click()
+  })
   // it("Should register", () => {
   //   cy.get('[data-cy="register"]').click()
   //   cy.wait(1000)
