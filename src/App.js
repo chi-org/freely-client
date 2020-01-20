@@ -15,7 +15,6 @@ import Landing from './components/common/Landing';
 
 export default () => {
   const [activities, setActivities] = useState([]);
-
   const initialState = {loggedInUser: null, activities: []};
   const [store, dispatch] = useReducer(stateReducer,initialState);
 
@@ -43,8 +42,8 @@ export default () => {
             <Route exact path="/activities" render={() => <Activities activities={activities} />} />
             <Route exact path="/activities/search" render={() => <ActivitySearch />} />
             <Route exact path="/students" render={() => <Students />} />
-                  <Route exact path="/landing" render={() => <Landing />} />
-                  {!getLoggedInUser() && <Route path="*" render={() => <Redirect to="/landing" />} />}
+            <Route exact path="/landing" render={() => <Landing />} />
+            {!getLoggedInUser() && <Route path="*" render={() => <Redirect to="/landing" />} />}
         </BrowserRouter>
       </StateContext.Provider>
     </div>
