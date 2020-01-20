@@ -11,11 +11,13 @@ import { userAuthenticated, setLoggedInUser, getLoggedInUser } from "./services/
 import { StateContext } from "./config/store";
 
 import { getAllActivities } from './services/activity_services';
+import { getStudents } from "./services/student_services";
 import Landing from './components/common/Landing';
 
 export default () => {
   const [activities, setActivities] = useState([]);
-  const initialState = {loggedInUser: null, activities: []};
+  const [students, setStudents] = useState([]);
+  const initialState = {loggedInUser: null, activities: [], students: []};
   const [store, dispatch] = useReducer(stateReducer,initialState);
 
   useEffect(() => {
@@ -24,6 +26,9 @@ export default () => {
           dispatch({ type: "setLoggedInUser", data: getLoggedInUser() });
           getAllActivities()
           .then((response) => setActivities(response.data))
+          .catch((error) => console.log(error))
+          getStudents()
+          .then((response) => setStudents(response.data))
           .catch((error) => console.log(error))
 	}).catch((error) => {
         console.log("got an error trying to check authenticated user:", error)
@@ -41,7 +46,7 @@ export default () => {
             <Route exact path="/" render={() => getLoggedInUser() ? < Redirect to="/activities" /> : <Redirect to="/landing" />} />
             <Route exact path="/activities" render={() => <Activities activities={activities} />} />
             <Route exact path="/activities/search" render={() => <ActivitySearch />} />
-            <Route exact path="/students" render={() => <Students />} />
+            <Route exact path="/students" render={() => <Students students={students} />} />
             <Route exact path="/landing" render={() => <Landing />} />
             {!getLoggedInUser() && <Route path="*" render={() => <Redirect to="/landing" />} />}
         </BrowserRouter>

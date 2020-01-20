@@ -4,7 +4,7 @@ import { loginUser, setLoggedInUser } from "../../services/authServices"
 import { MDBInput, MDBBtn, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter, MDBAlert } from "mdbreact"
 import { useHistory } from "react-router-dom";
 
-export default ({showLogin, setShowLogin, setActivities}) => {
+export default ({showLogin, setShowLogin, setActivities, setStudents}) => {
 
 	const { dispatch } = useGlobalState();
 	const [loginError, setLoginError] = useState("");
@@ -17,12 +17,14 @@ export default ({showLogin, setShowLogin, setActivities}) => {
 
 		loginUser({username: form.username.value, password: form.password.value}).then((response) => {
 			setActivities(response.activities);
+			setStudents(response.students);
 			dispatch({type: "setLoggedInUser", data: response.username});
 			setLoggedInUser(response.username);
 			setShowLogin(false);
 			history.push("/activities");
 		}).catch((error) => {
-			console.log(`An error occurred authenticating: ${error} with status: ${error.response.status || 500}`)
+			console.log(`An error occurred authenticating: ${error} with status:`)
+			//  ${error.response.status || 500}`)
 			setLoginError("There was an error logging in. Please check your credentials and try again.")
 		})
 	}
