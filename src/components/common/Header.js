@@ -15,20 +15,23 @@ export default ({ setActivities }) => {
     const [showLogin, setShowLogin] = useState(false);
     const [showLogout, setShowLogout] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
-    const [pageTitle, setPageTitle] = useState(history.location.pathname === "/activities" ? "Activities" : "Student Setup");
 
     const { store } = useGlobalState()
-    const {loggedInUser} = store
+    const { loggedInUser } = store
+
+    const pageTitle = () => {
+        return history.location.pathname === "/activities" ? "Activities" : "Student Setup";
+    }
 
     function navLoggedIn() {
         return (
             <Fragment>
                 <MDBNavbarNav left>
-                    {pageTitle !== "Activities" && <MDBNavItem>
-                        <MDBNavLink to="/activities" onClick={() => { setIsOpen(false); setPageTitle("Activities") }}>Activities</MDBNavLink>
+                    {pageTitle() !== "Activities" && <MDBNavItem>
+                        <MDBNavLink to="/activities" onClick={() => { setIsOpen(false); }}>Activities</MDBNavLink>
                     </MDBNavItem>}
-                    {pageTitle !== "Student Setup" && <MDBNavItem>
-                        <MDBNavLink to="/students" onClick={() => { setIsOpen(false); setPageTitle("Student Setup") }}>Student Setup</MDBNavLink>
+                    {pageTitle() !== "Student Setup" && <MDBNavItem>
+                        <MDBNavLink to="/students" onClick={() => { setIsOpen(false); }}>Student Setup</MDBNavLink>
                     </MDBNavItem>}
                 </MDBNavbarNav>
                 <MDBNavbarNav right>
@@ -57,7 +60,7 @@ export default ({ setActivities }) => {
 
     return (
         <MDBNavbar light expand="md">
-            <MDBNavbarBrand center="true">{getLoggedInUser() ? pageTitle : "Freely"}</MDBNavbarBrand>
+            <MDBNavbarBrand center="true">{getLoggedInUser() ? pageTitle() : "Freely"}</MDBNavbarBrand>
             <MDBNavbarToggler onClick={() => setIsOpen(!isOpen)} />
 
             <MDBCollapse isOpen={isOpen} navbar>
