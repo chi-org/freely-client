@@ -17,6 +17,7 @@ export default ({showLogin, setShowLogin, setActivities, setStudents}) => {
 
 		loginUser({username: form.username.value, password: form.password.value}).then((response) => {
 			setActivities(response.activities);
+			setStudents(response.students);
 			dispatch({type: "setLoggedInUser", data: response.username});
 			setLoggedInUser(response.username);
 			setShowLogin(false);
