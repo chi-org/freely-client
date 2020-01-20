@@ -4,27 +4,23 @@ import Activity from './Activity';
 import NewActivity from './NewActivity';
 import { getAllActivities } from '../../services/activity_services';
 
-export default ({ activities: data, setActivities }) => {
+export default ({ activities: data, setActivities, students }) => {
 
     const [showNewActivityModal, setShowNewActivityModal] = useState(false);
 
     // Search field manipulation
     const todayActivities = () => {
         const today = new Date();
-
         return data.filter(activity => {
             const date = new Date(activity.date);
-            
             return date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
         });
     }
 
     const nextSevenDaysActivities = () => {
         const today = new Date();
-
         return data.filter(activity => {
             const date = new Date(activity.date);
-            
             return date.getDate() >= today.getDate() && date.getDate() < today.getDate() + 7 && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
         });
     }
@@ -55,9 +51,9 @@ export default ({ activities: data, setActivities }) => {
         return (
             <div style={{width:"100%", display:"flex", justifyContent:"center", marginTop:"30px"}}>
             <select className="browser-default custom-select" style={{width: "8em", border: "none", fontSize: "1.3em", fontWeight: "bolder"}}>
-                <option>Student 1</option>
-                <option>Student 2</option>
-                <option>Student 3</option>
+                    {students.map((student, i) => {
+                        return <option key={i}>{student.name}</option>
+                    })}
             </select>
             </div>
         )
