@@ -7,13 +7,13 @@ export default ({data: student}) => {
 
     function myFunction() {
         console.log( "delete student", student.name);
-        console.log(student._id);
+        console.log(student);
         const deleteId = {
             "deleteId": student._id
         }
         console.log(deleteId)
         deleteStudent(deleteId).then((response) => {
-// test?
+            console.log("in deleteStudent")
         }).catch(error => {
             console.log("An error occurred trying to delete ", student.name, ": ", error);
         })
