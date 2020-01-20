@@ -20,7 +20,7 @@ export default ({showLogin, setShowLogin, setActivities}) => {
 			dispatch({type: "setLoggedInUser", data: response.username});
 			setLoggedInUser(response.username);
 			setShowLogin(false);
-			history.push("/");
+			history.push("/activities");
 		}).catch((error) => {
 			console.log(`An error occurred authenticating: ${error} with status: ${error.response.status || 500}`)
 			setLoginError("There was an error logging in. Please check your credentials and try again.")
