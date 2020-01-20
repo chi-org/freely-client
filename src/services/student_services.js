@@ -20,3 +20,13 @@ export const addStudent = async (data) => {
     throw(error);
   }
 }
+
+export const deleteStudent = async (studentId) => {
+  try {
+    return await api.delete("students/deleteStudent", { data: studentId });
+  }
+  catch (error) {
+    console.log(error);
+    throw(error);
+  }
+}
