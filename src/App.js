@@ -41,7 +41,7 @@ export default () => {
   return (
     <div>
       <StateContext.Provider value={{store, dispatch}} >
-        <BrowserRouter>
+         <BrowserRouter>
             <Route path="*" render={() => <Header setActivities={setActivities} />} />
             <Route exact path="/" render={() => getLoggedInUser() ? < Redirect to="/activities" /> : <Redirect to="/landing" />} />
             <Route exact path="/activities" render={() => <Activities activities={activities} />} />
