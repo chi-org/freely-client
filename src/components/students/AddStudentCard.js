@@ -11,12 +11,14 @@ export default ({students}) => {
 
         const form = event.target;
         const data = {
-            name: form.name,
-            color: form.color
+            name: form.name.value,
+            color: form.color.value
         }
         addStudent(data).then((response) => {
             students.push(data)
             history.push("/students");
+            document.getElementById("form").reset()
+
         }).catch(error =>{
             console.log("An error occured during student submission:", error);
         });
@@ -31,7 +33,7 @@ export default ({students}) => {
                     <input name="name" placeholder="Enter name" style={{minWidth: "20%", marginBottom: "0px"}} />
                 </div>
                 <div style={{display: "flex", alignItems: "center", marginTop: "30px"}}>
-                    <input color="color" type="color"  style={{maxWidth: "30px", height: "30px", padding: "0px", marginBottom: "0px", border: "none"}} />
+                    <input name="color" type="color"  style={{maxWidth: "30px", height: "30px", padding: "0px", marginBottom: "0px", border: "none"}} />
                     <p style={{marginLeft: "10px", marginBottom: "0px"}}>Color</p>
                 </div>
 

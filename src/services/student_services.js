@@ -1,8 +1,9 @@
 import api from "../config/api";
 
+
 export const getStudents = async () => {
   try {
-    return await api.get("students/myStudents");
+    return await api.get("students/getStudents");
   }
   catch (error) {
     console.log(error);

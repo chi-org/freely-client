@@ -3,6 +3,9 @@ import { MDBCard, MDBIcon, MDBCardBody } from 'mdbreact';
 
 export default ({data}) => {
 
+    function myFunction() {
+        console.log( "delete");
+      }
     return (
         <MDBCard style={{marginBottom: "6px"}}>
             <MDBCardBody>
@@ -21,7 +24,12 @@ export default ({data}) => {
                     <p style={{marginLeft: "10px", marginBottom: "0px"}}>Color</p>
                     <div style={{display: "flex", justifyContent: "flex-end", alignItems: "center", width: "100%"}}>
                         <a href="#!" style={{marginBottom: "0px", marginRight: "10px"}}>View activities</a>
-                        <MDBIcon size="lg" icon="trash" />
+                        <MDBIcon
+                            size="lg"
+                            gradient="red"
+                            className="click-action"
+                            onClick={myFunction}
+                            icon="trash" />
                     </div>
                 </div>
             </MDBCardBody>

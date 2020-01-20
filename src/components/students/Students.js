@@ -24,7 +24,7 @@ export default ({students: data}) => {
             {/* <StudentCard name={'Ben'} color={"#317821"} />
             <StudentCard name={'Jerry'} color={"#4285F4"} />
             <StudentCard name={'Bob'} color={"#fffff"} /> */}
-            <AddStudentCard />
+            <AddStudentCard students={data} />
         </MDBContainer>
     )
 }
