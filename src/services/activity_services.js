@@ -19,3 +19,13 @@ export const submitNewActivity = async (data) => {
         throw(error);
     }
 }
+
+export const deleteActivity = async (data) => {
+    try {
+        return await api.delete("activities/deleteActivity", { data: data });
+    }
+    catch (error) {
+        console.log(error);
+        throw (error);
+    }
+}
