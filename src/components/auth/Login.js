@@ -38,13 +38,13 @@ export default ({showLogin, setShowLogin, setActivities}) => {
 			<MDBModalBody>
 				{loginError && <MDBAlert color="danger">{loginError}</MDBAlert>}
 				<form id="form" onSubmit={handleLogin}>
-					<MDBInput icon="user" size="sm" name="username" label="username" />
-					<MDBInput icon="lock" size="sm" name="password" type="password" label="password" />
+					<MDBInput icon="user" size="sm" name="username" label="username" data-cy={'username'} />
+					<MDBInput icon="lock" size="sm" name="password" type="password" label="password" data-cy={'password'} />
 				</form>
 			</MDBModalBody>
 			<MDBModalFooter>
 				<MDBBtn color="secondary" onClick={dismiss}>Cancel</MDBBtn>
-				<MDBBtn form="form" type="submit" color="primary">Login</MDBBtn>
+				<MDBBtn form="form" type="submit" color="primary" data-cy={'login-button'} >Login</MDBBtn>
 			</MDBModalFooter>
 		</MDBModal>
 	)

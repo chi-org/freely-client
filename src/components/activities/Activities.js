@@ -69,7 +69,7 @@ export default ({ activities: data, setActivities }) => {
                 <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(todayActivities); setShowCustomDateSelection(false) }}>Today</MDBBtn>
                 <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(nextSevenDaysActivities); setShowCustomDateSelection(false) }}>Next 7 Days</MDBBtn>
                 <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(unscheduledActivities); setShowCustomDateSelection(false) }}>Unscheduled</MDBBtn>
-                <MDBBtn color="primary" onClick={() => { setShowCustomDateSelection(true); setActivitiesMatchingCriteria([]) }} >
+                <MDBBtn color="primary" onClick={() => { setShowCustomDateSelection(true); setActivitiesMatchingCriteria([]) }} data-cy='activity-date-button' >
                     <MDBIcon icon="search" />
                 </MDBBtn>
             </div>
@@ -87,7 +87,7 @@ export default ({ activities: data, setActivities }) => {
 
     const newActivityButton = () => {
         return (
-            <MDBBtn onClick={() => setShowNewActivityModal(true)} color="primary" style={{position:"fixed", bottom:"20px", left:"calc(50% - 1.5em)", borderRadius: "50%", padding: "0px", width: "3em", height: "3em"}}>
+            <MDBBtn onClick={() => setShowNewActivityModal(true)} color="primary" style={{position:"fixed", bottom:"20px", left:"calc(50% - 1.5em)", borderRadius: "50%", padding: "0px", width: "3em", height: "3em"}} data-cy={'create-activity'}>
                 <MDBIcon icon="plus" />
             </MDBBtn>
         )
@@ -97,8 +97,8 @@ export default ({ activities: data, setActivities }) => {
         return (
             <div>
                 <form id="date-picker" style={{ display: "flex", justifyContent: "space-around", padding: "30px 25% 0px" }}>
-                    <MDBInput type="date" name="from" label="From" onChange={onCustomDateChange} />
-                    <MDBInput type="date" name="to" label="To" onChange={onCustomDateChange} />
+                    <MDBInput type="date" name="from" label="From" onChange={onCustomDateChange} data-cy='activity-date-from' />
+                    <MDBInput type="date" name="to" label="To" onChange={onCustomDateChange} data-cy='activity-date-to' />
                 </form>
             </div>
         )

@@ -48,10 +48,10 @@ export default ({ setActivities }) => {
             <Fragment>
                 <MDBNavbarNav right>
                     <MDBNavItem>
-                        <MDBNavLink to="#" onClick={() => { setIsOpen(false); setShowLogin(true) }}>Log in</MDBNavLink>
+                        <MDBNavLink to="#" onClick={() => { setIsOpen(false); setShowLogin(true) }} data-cy={'login'} >Log in</MDBNavLink>
                     </MDBNavItem>
                     <MDBNavItem>
-                        <MDBNavLink to="#" onClick={() => { setIsOpen(false); setShowRegister(true) }}>Register</MDBNavLink>
+                        <MDBNavLink to="#" onClick={() => { setIsOpen(false); setShowRegister(true) }} data-cy={'register'} >Register</MDBNavLink>
                     </MDBNavItem>
                 </MDBNavbarNav>
             </Fragment>

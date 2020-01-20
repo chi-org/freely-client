@@ -42,7 +42,7 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
         return (
             <Fragment>
                 <h4 style={{marginTop: "30px"}}>Date</h4>
-                <MDBInput name="date" type="date" />
+                <MDBInput name="date" type="date" data-cy={'new-activity-date'} />
             </Fragment>
         )
     }
@@ -83,7 +83,7 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
         return (
             <Fragment>
                 <h4>Details</h4>
-                <MDBInput required name="details" type="textarea" label="Enter your text here..."></MDBInput>
+                <MDBInput required name="details" type="textarea" label="Enter your text here..." data-cy={'new-activity-details'}></MDBInput>
             </Fragment>
         )
     }
@@ -119,7 +119,7 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
             </MDBModalBody>
             <MDBModalFooter>
                 <MDBBtn form="form" onClick={() => setShowNewActivityModal(false)} color="secondary">Cancel</MDBBtn>
-                <MDBBtn form="form" type="submit" color="primary">Done</MDBBtn>
+                <MDBBtn form="form" type="submit" color="primary" data-cy={'new-activity-done'} >Done</MDBBtn>
             </MDBModalFooter>
         </MDBModal>
     )

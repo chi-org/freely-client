@@ -41,14 +41,14 @@ export default ({showRegister, setShowRegister}) => {
 			<MDBModalBody>
 				{registrationError && <MDBAlert color="danger">{registrationError}</MDBAlert>}
 				<form id="form" onSubmit={register}>
-					<MDBInput icon="user" size="sm" name="username" label="username" required />
-					<MDBInput icon="lock" size="sm" name="password" type="password" label="password" required />
-                    <MDBInput icon="lock" size="sm" name="confirm" type="password" label="confirm password" required />
+					<MDBInput icon="user" size="sm" name="username" label="username" required data-cy={'username'} />
+					<MDBInput icon="lock" size="sm" name="password" type="password" label="password" required data-cy={'password1'} />
+                    <MDBInput icon="lock" size="sm" name="confirm" type="password" label="confirm password" required data-cy={'password2'} />
 				</form>
 			</MDBModalBody>
 			<MDBModalFooter>
 				<MDBBtn color="secondary" onClick={dismiss}>Cancel</MDBBtn>
-				<MDBBtn id="submit-btn" form="form" type="submit" color="primary">Register</MDBBtn>
+				<MDBBtn id="submit-btn" form="form" type="submit" color="primary" data-cy={'register-button'} >Register</MDBBtn>
 			</MDBModalFooter>
 		</MDBModal>
 	)
