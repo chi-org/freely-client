@@ -1,11 +1,11 @@
-import React, { useState, Fragment } from 'react';
-import { MDBIcon, MDBBtn, MDBInput, MDBBadge, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from 'mdbreact';
+import React, { Fragment } from 'react';
+import { MDBIcon, MDBBtn, MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from 'mdbreact';
 import { useHistory } from 'react-router-dom';
-import {submitNewActivity as addNewActivity} from '../../services/activity_services';
+import { submitNewActivity as addNewActivity } from '../../services/activity_services';
+import { Multiselect } from 'multiselect-react-dropdown';
 
-export default ({activities, isOpen, setShowNewActivityModal}) => {
+export default ({ activities, isOpen, setShowNewActivityModal, students }) => {
 
-    const [showStudentsModal, setShowStudentsModal] = useState(false);
     const history = useHistory();
 
     const submitNewActivity = (event) => {
@@ -17,7 +17,7 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
             textContent: form.details.value,
             date: form.date.value || null,
             completed: false,
-            students: [],
+            students: studentsToInclude.map(student => student._id),
             assets: []
         }
 
@@ -32,7 +32,7 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
 
     const header = () => {
         return (
-            <MDBModalHeader toggle={() => setShowNewActivityModal(false)} style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+            <MDBModalHeader toggle={() => setShowNewActivityModal(false)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 New Activity
             </MDBModalHeader>
         )
@@ -41,43 +41,24 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
     const date = () => {
         return (
             <Fragment>
-                <h4 style={{marginTop: "30px"}}>Date</h4>
+                <h4 style={{ marginTop: "30px" }}>Date</h4>
                 <MDBInput name="date" type="date" />
             </Fragment>
         )
     }
 
-    const students = () => {
+    let studentsToInclude = [];
+    const studentSelector = () => {
         return (
             <Fragment>
-                <h4 style={{marginTop: "30px"}}>Students</h4>
-                <div style={{display:"flex", flexWrap:"wrap"}}>
-                    <MDBBadge pill className="student-pill click-action"><p>Bob</p></MDBBadge>
-                    <MDBBadge pill className="student-pill click-action student-selected"><p style={{color:"gray", padding:"5px", margin:"0px"}}>Rogrido Gutierrez</p></MDBBadge>
-                    <MDBBadge pill className="student-pill click-action"><p style={{color:"gray", padding:"5px", margin:"0px"}}>Bill</p></MDBBadge>
-                </div>
+                <h4 style={{ marginTop: "30px" }}>Students</h4>
+                <Multiselect onSelect={addStudent} onRemove={removeStudent} options={students} displayValue="name" style={{ searchBox: { border: "none", borderBottom: "1px solid #D0D0D0", borderRadius: "0px" } }} />
             </Fragment>
         )
     }
 
-    const studentModal = () => {
-        const students = ["Student 1", "Student 2", "Student 3"];
-
-        return (
-            <MDBModal isOpen={showStudentsModal}>
-                <MDBModalHeader toggle={() => setShowStudentsModal(false)}>Students</MDBModalHeader>
-                <MDBModalBody>
-                    <div>
-                        {students.map((student, i) => {
-                            return <span key={i} className="click-action" onClick={() => {setShowStudentsModal(false)}} style={{marginRight: "10px"}}>
-                                <MDBBadge pill color="indigo">{student}</MDBBadge>
-                            </span>
-                        })}
-                    </div>
-                </MDBModalBody>
-            </MDBModal>
-        )
-    }
+    const addStudent = (value) => studentsToInclude = value;
+    const removeStudent = (value) => studentsToInclude = value;
 
     const details = () => {
         return (
@@ -104,17 +85,15 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
     }
 
     return (
-        <MDBModal fullHeight toggle={() => setShowStudentsModal(false)} position="left" isOpen={isOpen}>
+        <MDBModal fullHeight position="left" isOpen={isOpen}>
             {header()}
             <MDBModalBody>
                 <form id="form" onSubmit={submitNewActivity}>
                 <br />
                     {details()}
-                    {/* {completed()} */}
                     {date()}
-                    {students()}
+                    {studentSelector()}
                     {images()}
-                    {studentModal()}
                 </form>
             </MDBModalBody>
             <MDBModalFooter>

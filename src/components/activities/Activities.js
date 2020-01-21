@@ -3,13 +3,14 @@ import {MDBContainer, MDBBtn, MDBIcon, MDBAlert, MDBInput} from 'mdbreact';
 import Activity from './Activity';
 import NewActivity from './NewActivity';
 import { getAllActivities } from '../../services/activity_services';
+import { Multiselect } from 'multiselect-react-dropdown';
 
 export default ({ activities: data, setActivities, students }) => {
 
     const [showNewActivityModal, setShowNewActivityModal] = useState(false);
     const [from, setFrom] = useState(null);
     const [to, setTo] = useState(null);
-    const [student, setStudent] = useState("");
+    const [selectedStudent, setSelectedStudent] = useState([]);
 
     // Search field manipulation
     const todayActivities = () => {
@@ -49,14 +50,11 @@ export default ({ activities: data, setActivities, students }) => {
     const [filterMethod, setFilterMethod] = useState("today");
 
     const studentPicker = () => {
+        let selectableStudentList = [{ name: "All students" }, ...students]
         return (
-            <div style={{width:"100%", display:"flex", justifyContent:"center", marginTop:"30px"}}>
-                <select onChange={(event) => setStudent(event.target.value)} className="browser-default custom-select" style={{ width: "8em", border: "none", fontSize: "1.3em", fontWeight: "bolder" }}>
-                    <option value="">All students</option>
-                    {students.map((student, i) => {
-                        return <option key={i} value={{ student }.name} >{student.name}</option>
-                    })}
-            </select>
+            <div style={{ width: "100%", display: "flex", justifyContent: "center", marginTop: "30px" }}>
+                <Multiselect placeholder="Select student" singleSelect={true} onSelect={(value) => setSelectedStudent(value)} onRemove={(value) => setSelectedStudent(value)} options={selectableStudentList} displayValue="name"
+                    style={{ chips: {fontSize: "1rem", margin: "0px"}, searchBox: { maxWidth: "80%", margin: "20px auto 40px auto", border: "none", borderBottom: "1px solid #D0D0D0", borderRadius: "0px" } }} />
             </div>
         )
     }
@@ -85,16 +83,16 @@ export default ({ activities: data, setActivities, students }) => {
             default: activitiesMatchingCriteria = []; break;
         }
 
-        if (student) {
+        if (selectedStudent.length > 0 && selectedStudent[0].name !== "All students") {
             activitiesMatchingCriteria = activitiesMatchingCriteria.filter(activity => {
-                return activity.students.indexOf(student) > -1
+                return activity.students.indexOf(selectedStudent[0]._id) > -1
             })
         }
 
         return (
             <MDBContainer style={{marginTop: "30px", marginBottom: "30px"}}>
                 {activitiesMatchingCriteria.length === 0 && <MDBAlert color="info">No activities match the search criteria</MDBAlert>}
-                {activitiesMatchingCriteria.map((activity, i) => <Activity key={i} data={activity} activities={data} setActivities={setActivities} />)}
+                {activitiesMatchingCriteria.map((activity, i) => <Activity key={i} students={students} data={activity} activities={data} setActivities={setActivities} />)}
             </MDBContainer>
         )
     }
@@ -131,7 +129,7 @@ export default ({ activities: data, setActivities, students }) => {
             {showCustomDateSelection && customDateSelection()}
             {activities()}
             {newActivityButton()}
-            <NewActivity activities={data} isOpen={showNewActivityModal} setShowNewActivityModal={setShowNewActivityModal} />
+            <NewActivity activities={data} isOpen={showNewActivityModal} setShowNewActivityModal={setShowNewActivityModal} students={students} />
         </div>
     )
 }

@@ -3,7 +3,7 @@ import {MDBCard, MDBCardBody, MDBCardText, MDBCollapse, MDBIcon, MDBBadge} from 
 import { Fragment } from 'react';
 import { deleteActivity } from '../../services/activity_services';
 
-export default ({data, activities, setActivities}) => {
+export default ({data, activities, setActivities, students}) => {
     const [linksOpen, setLinksOpen] = useState(false);
 
     const description = () => {
@@ -43,12 +43,16 @@ export default ({data, activities, setActivities}) => {
         )
     }
 
-    const students = () => {
+    const displayStudents = () => {
         return (
             <div style={{display: "flex", flexWrap: "wrap", justifyContent: "flex-end", alignItems: "flex-end"}}>
-                {data.students.map((student, i) =>
-                    <MDBBadge key={i} pill color="indigo" style={{textAlign: "right",  marginBottom: "5px", marginLeft: "5px"}}>{student}</MDBBadge>
-                )}
+                {data.students.map((student_id, i) => {
+                    let studentRecord = students.find(student => student._id === student_id);
+                    if (studentRecord) {
+                        return <MDBBadge key={i} pill color="indigo" style={{ textAlign: "right", marginBottom: "5px", marginLeft: "5px" }}>{studentRecord.name}</MDBBadge>
+                    }
+                    else return false;
+                })}
             </div>
         )
     }
@@ -81,7 +85,7 @@ export default ({data, activities, setActivities}) => {
                     {links()}
                 </div>
                 <div style={{width: "30%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
-                    {students()}
+                    {displayStudents()}
                     {assets()}
                     <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", width: "100%" }}>
                         <MDBIcon className="click-action" size="md" icon="trash" onClick={removeActivity} />
