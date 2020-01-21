@@ -1,12 +1,9 @@
 import React, { Fragment } from 'react';
 import { MDBIcon, MDBBtn, MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from 'mdbreact';
-import { useHistory } from 'react-router-dom';
 import { submitNewActivity as addNewActivity } from '../../services/activity_services';
 import { Multiselect } from 'multiselect-react-dropdown';
 
 export default ({ activities, isOpen, setShowNewActivityModal, students, setActivities }) => {
-
-    const history = useHistory();
 
     const submitNewActivity = (event) => {
         event.preventDefault();

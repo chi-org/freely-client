@@ -49,7 +49,7 @@ export default ({data, activities, setActivities, students}) => {
                 {data.students.map((student_id, i) => {
                     let studentRecord = students.find(student => student._id === student_id);
                     if (studentRecord) {
-                        return <MDBBadge key={i} pill color="indigo" style={{ textAlign: "right", marginBottom: "5px", marginLeft: "5px" }}>{studentRecord.name}</MDBBadge>
+                        return <MDBBadge key={i} className="student-pill" color={studentRecord.color} pill style={{ backgroundColor: `${studentRecord.color}`, textAlign: "right", marginBottom: "5px", marginLeft: "5px" }}>{studentRecord.name}</MDBBadge>
                     }
                     else return false;
                 })}
