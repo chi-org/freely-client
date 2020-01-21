@@ -28,15 +28,15 @@ export default ({ setActivities, setStudents }) => {
             <Fragment>
                 <MDBNavbarNav left>
                     {pageTitle() !== "Activities" && <MDBNavItem>
-                        <MDBNavLink to="/activities" onClick={() => { setIsOpen(false); }}>Activities</MDBNavLink>
+                        <MDBNavLink style={{ color: "white" }} to="/activities" onClick={() => { setIsOpen(false); }}>Activities</MDBNavLink>
                     </MDBNavItem>}
                     {pageTitle() !== "Student Setup" && <MDBNavItem>
-                        <MDBNavLink to="/students" onClick={() => { setIsOpen(false); }}>Student Setup</MDBNavLink>
+                        <MDBNavLink style={{ color: "white" }} to="/students" onClick={() => { setIsOpen(false); }}>Student Setup</MDBNavLink>
                     </MDBNavItem>}
                 </MDBNavbarNav>
                 <MDBNavbarNav right>
                     <MDBNavItem>
-                        <MDBNavLink to="#" onClick={() => { setIsOpen(false); setShowLogout(true) }}>Log out</MDBNavLink>
+                        <MDBNavLink style={{ color: "white" }} to="#" onClick={() => { setIsOpen(false); setShowLogout(true) }}>Log out</MDBNavLink>
                     </MDBNavItem>
                 </MDBNavbarNav>
             </Fragment>
@@ -48,10 +48,10 @@ export default ({ setActivities, setStudents }) => {
             <Fragment>
                 <MDBNavbarNav right>
                     <MDBNavItem>
-                        <MDBNavLink to="#" onClick={() => { setIsOpen(false); setShowLogin(true) }}>Log in</MDBNavLink>
+                        <MDBNavLink style={{ color: "white" }} to="#" onClick={() => { setIsOpen(false); setShowLogin(true) }}>Log in</MDBNavLink>
                     </MDBNavItem>
                     <MDBNavItem>
-                        <MDBNavLink to="#" onClick={() => { setIsOpen(false); setShowRegister(true) }}>Register</MDBNavLink>
+                        <MDBNavLink style={{ color: "white" }} to="#" onClick={() => { setIsOpen(false); setShowRegister(true) }}>Register</MDBNavLink>
                     </MDBNavItem>
                 </MDBNavbarNav>
             </Fragment>
@@ -59,8 +59,8 @@ export default ({ setActivities, setStudents }) => {
     }
 
     return (
-        <MDBNavbar style={{ backgroundColor: "#612F41" }} dark expand="md">
-            <MDBNavbarBrand center="true">{getLoggedInUser() ? pageTitle() : "Freely"}</MDBNavbarBrand>
+        <MDBNavbar style={{ backgroundColor: "#612F41" }} light expand="md">
+            <MDBNavbarBrand style={{color: "white"}} center="true">{getLoggedInUser() ? pageTitle() : "Freely"}</MDBNavbarBrand>
             <MDBNavbarToggler onClick={() => setIsOpen(!isOpen)} />
 
             <MDBCollapse isOpen={isOpen} navbar>
