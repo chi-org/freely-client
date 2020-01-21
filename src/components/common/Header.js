@@ -59,7 +59,7 @@ export default ({ setActivities, setStudents }) => {
     }
 
     return (
-        <MDBNavbar light expand="md">
+        <MDBNavbar style={{ backgroundColor: "#612F41" }} dark expand="md">
             <MDBNavbarBrand center="true">{getLoggedInUser() ? pageTitle() : "Freely"}</MDBNavbarBrand>
             <MDBNavbarToggler onClick={() => setIsOpen(!isOpen)} />
 
