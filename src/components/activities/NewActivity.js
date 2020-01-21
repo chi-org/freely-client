@@ -19,19 +19,11 @@ export default ({ activities, isOpen, setShowNewActivityModal, students, setActi
         }
 
         addNewActivity(data).then((response) => {
-            setActivities([...activities, response.data.data])
+            setActivities([...activities, response.data.data]);
             setShowNewActivityModal(false);
         }).catch(error => {
             console.log("An error occurred during submission:", error);
         });
-    }
-
-    const header = () => {
-        return (
-            <MDBModalHeader toggle={() => setShowNewActivityModal(false)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                New Activity
-            </MDBModalHeader>
-        )
     }
 
     const date = () => {
@@ -45,16 +37,21 @@ export default ({ activities, isOpen, setShowNewActivityModal, students, setActi
 
     let studentsToInclude = [];
     const studentSelector = () => {
+        const addStudent = (value) => studentsToInclude = value;
+        const removeStudent = (value) => studentsToInclude = value;
+
         return (
             <Fragment>
                 <h4 style={{ marginTop: "30px" }}>Students</h4>
-                <Multiselect onSelect={addStudent} onRemove={removeStudent} options={students} displayValue="name" style={{ searchBox: { border: "none", borderBottom: "1px solid #D0D0D0", borderRadius: "0px" } }} />
+                <Multiselect
+                    onSelect={addStudent}
+                    onRemove={removeStudent}
+                    options={students}
+                    displayValue="name"
+                    style={{ searchBox: { border: "none", borderBottom: "1px solid #D0D0D0", borderRadius: "0px" } }} />
             </Fragment>
         )
     }
-
-    const addStudent = (value) => studentsToInclude = value;
-    const removeStudent = (value) => studentsToInclude = value;
 
     const details = () => {
         return (
@@ -82,7 +79,11 @@ export default ({ activities, isOpen, setShowNewActivityModal, students, setActi
 
     return (
         <MDBModal fullHeight position="left" isOpen={isOpen}>
-            {header()}
+            <MDBModalHeader
+                toggle={() => setShowNewActivityModal(false)}
+                style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>New Activity
+            </MDBModalHeader>
+
             <MDBModalBody>
                 <form id="form" onSubmit={submitNewActivity}>
                 <br />

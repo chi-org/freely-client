@@ -1,12 +1,8 @@
-import api from "../config/api"
-
+import api from "../config/api";
 
 export async function registerUser(userData) {
-  // const {username, password} = userData
-  console.log(userData)
   try {
       const response = await api.post("/auth/register", userData)
-      console.log(userData.username, " back from server", response)
       return response.data
   }
   catch (error) {
@@ -17,10 +13,8 @@ export async function registerUser(userData) {
 }
 
 export async function loginUser(userData) {
-  // const {username, password} = userData
   try {
     const response = await api.post("auth/login", userData)
-    console.log(userData.username, " back from server")
     return response.data
   }
   catch (error) {
@@ -38,6 +32,7 @@ export async function logoutUser() {
       throw(error)
   }
 }
+
 export async function userAuthenticated() {
   try {
       const response =  await api.get("/auth/user")
@@ -53,7 +48,6 @@ export function getLoggedInUser() {
   return localStorage.getItem("loggedInUser")
 }
 
-// Store loggedInUser username in local storage
 export function setLoggedInUser(user) {
   user ? localStorage.setItem("loggedInUser", user) : localStorage.removeItem("loggedInUser")
 }
