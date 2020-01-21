@@ -4,31 +4,32 @@ import React, { useState, useReducer, useEffect } from 'react';
 import Header from "./components/common/Header";
 import Activities from "./components/activities/Activities";
 import Students from './components/students/Students';
-
-import stateReducer from "./config/stateReducer";
-import { userAuthenticated, setLoggedInUser, getLoggedInUser } from "./services/authServices";
-import { StateContext } from "./config/store";
+import Landing from './components/common/Landing';
 
 import { getAllActivities } from './services/activity_services';
+import { userAuthenticated, setLoggedInUser, getLoggedInUser } from "./services/auth_services";
 import { getStudents } from "./services/student_services";
-import Landing from './components/common/Landing';
+
+import stateReducer from "./config/state_reducer";
+import { StateContext } from "./config/store";
 
 export default () => {
   const [activities, setActivities] = useState([]);
   const [students, setStudents] = useState([]);
-  const initialState = {loggedInUser: null, activities: [], students: []};
-  const [store, dispatch] = useReducer(stateReducer,initialState);
+  const initialState = {loggedInUser: null};
+  const [store, dispatch] = useReducer(stateReducer, initialState);
 
   useEffect(() => {
-	// If we have login information persisted and we're still logged into the server, set the state
       userAuthenticated().then(() => {
           dispatch({ type: "setLoggedInUser", data: getLoggedInUser() });
+
           getAllActivities()
-          .then((response) => setActivities(response.data))
-          .catch((error) => console.log(error))
+              .then((response) => setActivities(response.data))
+              .catch((error) => console.log(error))
+
           getStudents()
-          .then((response) => setStudents(response.data))
-          .catch((error) => console.log(error))
+              .then((response) => setStudents(response.data))
+              .catch((error) => console.log(error))
 	}).catch((error) => {
         console.log("got an error trying to check authenticated user:", error)
 		setLoggedInUser(null)

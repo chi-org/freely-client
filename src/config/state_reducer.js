@@ -6,12 +6,7 @@ export default function (state, action) {
           loggedInUser: action.data
           }
       }
-      case "setLoginError": {
-          return action.data
-      }
-      case "setRegisterError": {
-          return action.data
-      }
+
       default:
           return state
   }

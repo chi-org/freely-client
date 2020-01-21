@@ -1,19 +1,10 @@
 import React, {useState} from 'react';
-import {MDBCard, MDBCardBody, MDBCardText, MDBCollapse, MDBIcon, MDBBadge} from 'mdbreact';
-import { Fragment } from 'react';
+import { MDBCard, MDBCardBody, MDBCardText, MDBCollapse, MDBIcon, MDBBadge } from 'mdbreact';
 import { deleteActivity } from '../../services/activity_services';
 
-export default ({data, activities, setActivities, students}) => {
-    const [linksOpen, setLinksOpen] = useState(false);
+export default ({ data, activities, setActivities, students }) => {
 
-    const description = () => {
-        return (
-            <Fragment>
-                {data.name && <MDBCardText>{data.name}</MDBCardText>}
-                <MDBCardText>{data.textContent}</MDBCardText>
-            </Fragment>
-        )
-    }
+    const [linksOpen, setLinksOpen] = useState(false);
 
     const date = () => {
         const date = new Date(data.date);
@@ -49,7 +40,13 @@ export default ({data, activities, setActivities, students}) => {
                 {data.students.map((student_id, i) => {
                     let studentRecord = students.find(student => student._id === student_id);
                     if (studentRecord) {
-                        return <MDBBadge key={i} className="student-pill" color={studentRecord.color} pill style={{ backgroundColor: `${studentRecord.color}`, textAlign: "right", marginBottom: "5px", marginLeft: "5px" }}>{studentRecord.name}</MDBBadge>
+                        return <MDBBadge
+                            pill
+                            key={i}
+                            className="student-pill"
+                            color={studentRecord.color}
+                            style={{ backgroundColor: `${studentRecord.color}` }}>{studentRecord.name}
+                        </MDBBadge>
                     }
                     else return false;
                 })}
@@ -79,7 +76,8 @@ export default ({data, activities, setActivities, students}) => {
         <MDBCard>
             <MDBCardBody style={{display: "flex"}}>
                 <div style={{ width: "70%" }}>
-                    {description()}
+                    {data.name && <MDBCardText>{data.name}</MDBCardText>}
+                    <MDBCardText>{data.textContent}</MDBCardText>
                     {data.date && date()}
                     {expandLinksButton()}
                     {links()}

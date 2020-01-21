@@ -1,3 +1,10 @@
 .click-action:hover {
     cursor: pointer;
 }
+
+.student-pill {
+    text-align: right;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding: 5px 15px;
+}

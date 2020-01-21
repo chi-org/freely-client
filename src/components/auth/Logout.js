@@ -1,34 +1,31 @@
 import React from "react"
 import {useGlobalState} from "../../config/store"
-import { logoutUser, setLoggedInUser } from "../../services/authServices"
+import { logoutUser, setLoggedInUser } from "../../services/auth_services"
 import { MDBBtn, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from "mdbreact"
-import { useHistory } from "react-router-dom";
 
 export default ({showLogout, setShowLogout}) => {
 
 	const { dispatch } = useGlobalState();
-	const history = useHistory();
+
+	const hideModal = () => {
+		setShowLogout(false);
+	}
 
 	function logout() {
 		logoutUser();
 		dispatch({type: "setLoggedInUser", data: null});
         setLoggedInUser(null);
-		history.push("/");
 	}
 
-    const dismiss = () => {
-        setShowLogout(false);
-    }
-
 	return (
-		<MDBModal toggle={dismiss} isOpen={showLogout}>
-			<MDBModalHeader toggle={dismiss}>Logout</MDBModalHeader>
+		<MDBModal toggle={hideModal} isOpen={showLogout}>
+			<MDBModalHeader toggle={hideModal}>Logout</MDBModalHeader>
 			<MDBModalBody>
 				Are you sure you want to end your session?
 			</MDBModalBody>
 			<MDBModalFooter>
-				<MDBBtn color="secondary" onClick={dismiss}>Cancel</MDBBtn>
-				<MDBBtn color="danger" onClick={() => {dismiss(); logout()}}>Logout</MDBBtn>
+				<MDBBtn color="secondary" onClick={hideModal}>Cancel</MDBBtn>
+				<MDBBtn color="primary" onClick={() => {hideModal(); logout()}}>Logout</MDBBtn>
 			</MDBModalFooter>
 		</MDBModal>
 	)
