@@ -1,19 +1,17 @@
 import React from 'react';
 import { MDBCard, MDBIcon, MDBCardBody } from 'mdbreact';
 import { deleteStudent } from '../../services/student_services';
+
 // import Students from './Students';
 
-export default ({data: student}) => {
+export default ({data: student, students, setStudents}) => {
 
-    function myFunction() {
+    function removeStudent() {
         console.log( "delete student", student.name);
-        console.log(student);
-        const deleteId = {
-            "deleteId": student._id
-        }
-        console.log(deleteId)
-        deleteStudent(deleteId).then((response) => {
-            console.log("in deleteStudent")
+        deleteStudent({deleteId: student._id}).then((response) => {
+            // setStudents(activities(student => student._id !== deletedStudent));
+            setStudents(students.filter(st => st._id !== student._id))
+
         }).catch(error => {
             console.log("An error occurred trying to delete ", student.name, ": ", error);
         })
@@ -31,7 +29,7 @@ export default ({data: student}) => {
                     <input
                     type="color"
                     value={student.color}
-                    // onChange={} todo
+                    onChange={console.log("todo: change color")}
                     style={{maxWidth: "30px", height: "30px", padding: "0px", marginBottom: "0px", border: "none"}} />
                     <p style={{marginLeft: "10px", marginBottom: "0px"}}>Color</p>
                     <div style={{display: "flex", justifyContent: "flex-end", alignItems: "center", width: "100%"}}>
@@ -40,7 +38,7 @@ export default ({data: student}) => {
                             size="lg"
                             gradient="red"
                             className="click-action"
-                            onClick={myFunction}
+                            onClick={removeStudent}
                             icon="trash" />
                     </div>
                 </div>
