@@ -1,13 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { MDBContainer, MDBAlert } from "mdbreact";
 import StudentCard from "./StudentCard";
 import AddStudentCard from "./AddStudentCard";
-import { useHistory } from "react-router-dom";
 
-export default ({students: data}) => {
-
-    const history = useHistory();
-
+export default ({ students: data }) => {
 
     const students = () => {
         return (
