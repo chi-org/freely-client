@@ -3,7 +3,6 @@ import React, { useState, useReducer, useEffect } from 'react';
 
 import Header from "./components/common/Header";
 import Activities from "./components/activities/Activities";
-import ActivitySearch from './components/activities/ActivitySearch';
 import Students from './components/students/Students';
 
 import stateReducer from "./config/stateReducer";
@@ -42,10 +41,9 @@ export default () => {
     <div>
       <StateContext.Provider value={{store, dispatch}} >
          <BrowserRouter>
-            <Route path="*" render={() => <Header setActivities={setActivities} setStudents={setStudents}/>} />
+            <Route path="*" render={() => <Header setActivities={setActivities} setStudents={setStudents} />} />
             <Route exact path="/" render={() => getLoggedInUser() ? < Redirect to="/activities" /> : <Redirect to="/landing" />} />
-            <Route exact path="/activities" render={() => <Activities activities={activities} setActivities={setActivities} />} />
-            <Route exact path="/activities/search" render={() => <ActivitySearch />} />
+            <Route exact path="/activities" render={() => <Activities activities={activities} students={students} setActivities={setActivities} />} />
             <Route exact path="/students" render={() => <Students students={students} />} />
             <Route exact path="/landing" render={() => <Landing />} />
             {!getLoggedInUser() && <Route path="*" render={() => <Redirect to="/landing" />} />}
