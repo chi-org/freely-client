@@ -30,14 +30,14 @@ export default ({students}) => {
                 <form id="form" onSubmit={submitNewStudent}>
                 <div style={{display: "flex", alignItems: "center"}}>
                     <MDBIcon size="lg" icon="user" style={{marginRight: "10px"}} />
-                    <input name="name" placeholder="Enter name" style={{minWidth: "20%", marginBottom: "0px"}} />
+                    <input name="name" placeholder="Enter name" style={{minWidth: "20%", marginBottom: "0px"}} data-cy={"new-student-name"}/>
                 </div>
                 <div style={{display: "flex", alignItems: "center", marginTop: "30px"}}>
-                    <input name="color" type="color"  style={{maxWidth: "30px", height: "30px", padding: "0px", marginBottom: "0px", border: "none"}} />
+                    <input name="color" type="color"  style={{maxWidth: "30px", height: "30px", padding: "0px", marginBottom: "0px", border: "none"}} data-cy={"new-student-color"}/>
                     <p style={{marginLeft: "10px", marginBottom: "0px"}}>Color</p>
                 </div>
 
-                <MDBBtn type="submit" color="primary" style={{position: "absolute", right: "20px", bottom: "20px", borderRadius: "50%", padding: "0px", width: "3em", height: "3em", margin: "0px"}}>
+                <MDBBtn type="submit" color="primary" style={{position: "absolute", right: "20px", bottom: "20px", borderRadius: "50%", padding: "0px", width: "3em", height: "3em", margin: "0px"}} data-cy={"new-student-button"}>
                     <MDBIcon icon="plus" />
                 </MDBBtn>
                 </form>

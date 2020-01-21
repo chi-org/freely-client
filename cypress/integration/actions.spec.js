@@ -1,14 +1,26 @@
 /// <reference types="Cypress" />
+let testUserRun = "test" + Date.now();
 
 context("Actions", () => {
+  before(() => {
+      cy.visit("http://localhost:3000/")
+      cy.wait(1000)
+      cy.get('[data-cy="register"]').click()
+      cy.wait(1000)
+      cy.get('[data-cy="username"]').type(testUserRun)
+      cy.get('[data-cy="password1"]').type("test")
+      cy.get('[data-cy="password2"]').type("test")
+      cy.get('[data-cy="register-button"]').click()
+      cy.wait(2000)
+  })
   beforeEach(() => {
     Cypress.Cookies.debug(true)
     cy.viewport(1600, 900)
     cy.visit("http://localhost:3000/")
     cy.clearCookies()
     cy.get('[data-cy="login"]').click()
-    cy.wait(500)
-    cy.get('[data-cy="username"]').type("test")
+    cy.wait(1000)
+    cy.get('[data-cy="username"]').type(testUserRun)
     cy.get('[data-cy="password"]').type("test")
     cy.get('[data-cy="login-button"]').click()
   })
@@ -16,15 +28,16 @@ context("Actions", () => {
     cy.get('[data-cy="logout"]').click()
     cy.get('[data-cy="logout-button"]').click()
   })
-  // it("Should register", () => {
-  //   cy.get('[data-cy="register"]').click()
-  //   cy.wait(1000)
-  //   cy.get('[data-cy="username"]').type("test")
-  //   cy.get('[data-cy="password1"]').type("test")
-  //   cy.get('[data-cy="password2"]').type("test")
-  //   cy.get('[data-cy="register-button"]').click()
-  //   // cy.wait(5000)
-  // })
+  it("should create a student", () => {
+    cy.get('[data-cy="header-students"]').click()
+    cy.wait(2000)
+    cy.url().should('eq', 'http://localhost:3000/students')
+    cy.get('[data-cy="new-student-name"]').type("Test Students" + Date.now())
+    cy.get('[data-cy="new-student-color"]').type('#ffffff')
+    cy.get('[data-cy="new-student-button"]').click()
+    cy.wait(2000)
+  })
+
   it("Should create a activity", () => {
     cy.url().should('eq', 'http://localhost:3000/activities')
     cy.get('[data-cy="create-activity"]').click()

@@ -28,10 +28,10 @@ export default ({ setActivities, setStudents }) => {
             <Fragment>
                 <MDBNavbarNav left>
                     {pageTitle() !== "Activities" && <MDBNavItem>
-                        <MDBNavLink to="/activities" onClick={() => { setIsOpen(false); }}>Activities</MDBNavLink>
+                        <MDBNavLink to="/activities" onClick={() => { setIsOpen(false); }} data-cy='header-activities'>Activities</MDBNavLink>
                     </MDBNavItem>}
                     {pageTitle() !== "Student Setup" && <MDBNavItem>
-                        <MDBNavLink to="/students" onClick={() => { setIsOpen(false); }}>Student Setup</MDBNavLink>
+                        <MDBNavLink to="/students" onClick={() => { setIsOpen(false); }} data-cy='header-students'>Student Setup</MDBNavLink>
                     </MDBNavItem>}
                 </MDBNavbarNav>
                 <MDBNavbarNav right>
