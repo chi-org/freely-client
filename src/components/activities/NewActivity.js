@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { submitNewActivity as addNewActivity } from '../../services/activity_services';
 import { Multiselect } from 'multiselect-react-dropdown';
 
-export default ({ activities, isOpen, setShowNewActivityModal, students }) => {
+export default ({ activities, isOpen, setShowNewActivityModal, students, setActivities }) => {
 
     const history = useHistory();
 
@@ -22,8 +22,7 @@ export default ({ activities, isOpen, setShowNewActivityModal, students }) => {
         }
 
         addNewActivity(data).then((response) => {
-            activities.push(response.data.data);
-            history.push("/activities");
+            setActivities([...activities, response.data.data])
             setShowNewActivityModal(false);
         }).catch(error => {
             console.log("An error occurred during submission:", error);
