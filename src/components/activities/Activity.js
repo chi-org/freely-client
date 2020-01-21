@@ -64,7 +64,7 @@ export default ({data, activities, setActivities}) => {
     }
 
     const removeActivity = () => {
-        deleteActivity({ deleteId: data._id }).then(response => {
+        deleteActivity({ deleteId: data._id }).then(() => {
             setActivities(activities.filter(activity => activity._id !== data._id));
         }).catch(error => {
             console.log("Error:", error)

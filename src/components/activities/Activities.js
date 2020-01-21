@@ -4,11 +4,12 @@ import Activity from './Activity';
 import NewActivity from './NewActivity';
 import { getAllActivities } from '../../services/activity_services';
 
-export default ({ activities: data, setActivities }) => {
+export default ({ activities: data, setActivities, students }) => {
 
     const [showNewActivityModal, setShowNewActivityModal] = useState(false);
     const [from, setFrom] = useState(null);
     const [to, setTo] = useState(null);
+    const [student, setStudent] = useState("");
 
     // Search field manipulation
     const todayActivities = () => {
@@ -45,28 +46,28 @@ export default ({ activities: data, setActivities }) => {
 
     // Elements
     const [showCustomDateSelection, setShowCustomDateSelection] = useState(false);
-    const [filterMethod, setFilterMethod] = useState("unscheduled");
+    const [filterMethod, setFilterMethod] = useState("today");
 
     const studentPicker = () => {
         return (
             <div style={{width:"100%", display:"flex", justifyContent:"center", marginTop:"30px"}}>
-            <select className="browser-default custom-select" style={{width: "8em", border: "none", fontSize: "1.3em", fontWeight: "bolder"}}>
-                <option>Student 1</option>
-                <option>Student 2</option>
-                <option>Student 3</option>
+                <select onChange={(event) => setStudent(event.target.value)} className="browser-default custom-select" style={{ width: "8em", border: "none", fontSize: "1.3em", fontWeight: "bolder" }}>
+                    <option value="">All students</option>
+                    {students.map((student, i) => {
+                        return <option key={i} value={{ student }.name} >{student.name}</option>
+                    })}
             </select>
             </div>
         )
     }
 
     const activityDateRange = () => {
-        console.log(filterMethod)
         return (
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", marginTop: "10px" }}>
                 <MDBBtn color="primary" onClick={() => { setFilterMethod("today"); setShowCustomDateSelection(false) }}>Today</MDBBtn>
                 <MDBBtn color="primary" onClick={() => { setFilterMethod("week"); setShowCustomDateSelection(false) }}>Next 7 Days</MDBBtn>
                 <MDBBtn color="primary" onClick={() => { setFilterMethod("unscheduled"); setShowCustomDateSelection(false) }}>Unscheduled</MDBBtn>
-                <MDBBtn color="primary" onClick={() => { setFilterMethod("custom"); setShowCustomDateSelection(true) }} >
+                <MDBBtn color="primary" onClick={() => { setFilterMethod("custom"); setFrom(null); setTo(null); setShowCustomDateSelection(true) }} >
                     <MDBIcon icon="search" />
                 </MDBBtn>
             </div>
@@ -82,6 +83,12 @@ export default ({ activities: data, setActivities }) => {
             case "unscheduled": activitiesMatchingCriteria = unscheduledActivities(); break;
             case "custom": activitiesMatchingCriteria = onCustomDateChange(); break;
             default: activitiesMatchingCriteria = []; break;
+        }
+
+        if (student) {
+            activitiesMatchingCriteria = activitiesMatchingCriteria.filter(activity => {
+                return activity.students.indexOf(student) > -1
+            })
         }
 
         return (
