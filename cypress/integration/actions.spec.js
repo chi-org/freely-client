@@ -33,7 +33,7 @@ context("Actions", () => {
     cy.wait(2000)
     cy.url().should('eq', 'http://localhost:3000/students')
     cy.get('[data-cy="new-student-name"]').type("Test Students" + Date.now())
-    cy.get('[data-cy="new-student-color"]').type('#ffffff')
+    cy.get('[data-cy="new-student-color"]')
     cy.get('[data-cy="new-student-button"]').click()
     cy.wait(2000)
   })
