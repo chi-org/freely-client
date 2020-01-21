@@ -7,6 +7,9 @@ import { getAllActivities } from '../../services/activity_services';
 export default ({ activities: data, setActivities, students }) => {
 
     const [showNewActivityModal, setShowNewActivityModal] = useState(false);
+    const [from, setFrom] = useState(null);
+    const [to, setTo] = useState(null);
+    const [student, setStudent] = useState("");
 
     // Search field manipulation
     const todayActivities = () => {
@@ -25,34 +28,33 @@ export default ({ activities: data, setActivities, students }) => {
         });
     }
 
-    const unscheduledActivities = () => data.filter(activity => !activity.date);
+    const unscheduledActivities = () => {
+        return data.filter(activity => !activity.date);
+    }
 
     const onCustomDateChange = () => {
-        const form = document.getElementById("date-picker");
-        const from = new Date(form.from.value);
-        const to = new Date(form.to.value);
-
         if (from && to) {
-            setActivitiesMatchingCriteria(data.filter(activity => {
+            return data.filter(activity => {
                 const date = new Date(activity.date);
                 return date >= from && date <= to;
-            }));
+            });
         }
         else {
-            setActivitiesMatchingCriteria([]);
+            return [];
         }
     }
 
     // Elements
-    const [activitiesMatchingCriteria, setActivitiesMatchingCriteria] = useState(todayActivities());
     const [showCustomDateSelection, setShowCustomDateSelection] = useState(false);
+    const [filterMethod, setFilterMethod] = useState("today");
 
     const studentPicker = () => {
         return (
             <div style={{width:"100%", display:"flex", justifyContent:"center", marginTop:"30px"}}>
-            <select className="browser-default custom-select" style={{width: "8em", border: "none", fontSize: "1.3em", fontWeight: "bolder"}}>
+                <select onChange={(event) => setStudent(event.target.value)} className="browser-default custom-select" style={{ width: "8em", border: "none", fontSize: "1.3em", fontWeight: "bolder" }}>
+                    <option value="">All students</option>
                     {students.map((student, i) => {
-                        return <option key={i}>{student.name}</option>
+                        return <option key={i} value={{ student }.name} >{student.name}</option>
                     })}
             </select>
             </div>
@@ -62,10 +64,10 @@ export default ({ activities: data, setActivities, students }) => {
     const activityDateRange = () => {
         return (
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", marginTop: "10px" }}>
-                <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(todayActivities); setShowCustomDateSelection(false) }}>Today</MDBBtn>
-                <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(nextSevenDaysActivities); setShowCustomDateSelection(false) }}>Next 7 Days</MDBBtn>
-                <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(unscheduledActivities); setShowCustomDateSelection(false) }}>Unscheduled</MDBBtn>
-                <MDBBtn color="primary" onClick={() => { setShowCustomDateSelection(true); setActivitiesMatchingCriteria([]) }} >
+                <MDBBtn color="primary" onClick={() => { setFilterMethod("today"); setShowCustomDateSelection(false) }}>Today</MDBBtn>
+                <MDBBtn color="primary" onClick={() => { setFilterMethod("week"); setShowCustomDateSelection(false) }}>Next 7 Days</MDBBtn>
+                <MDBBtn color="primary" onClick={() => { setFilterMethod("unscheduled"); setShowCustomDateSelection(false) }}>Unscheduled</MDBBtn>
+                <MDBBtn color="primary" onClick={() => { setFilterMethod("custom"); setFrom(null); setTo(null); setShowCustomDateSelection(true) }} >
                     <MDBIcon icon="search" />
                 </MDBBtn>
             </div>
@@ -73,10 +75,26 @@ export default ({ activities: data, setActivities, students }) => {
     }
 
     const activities = () => {
+        let activitiesMatchingCriteria = [];
+
+        switch (filterMethod) {
+            case "today": activitiesMatchingCriteria = todayActivities(); break;
+            case "week": activitiesMatchingCriteria = nextSevenDaysActivities(); break;
+            case "unscheduled": activitiesMatchingCriteria = unscheduledActivities(); break;
+            case "custom": activitiesMatchingCriteria = onCustomDateChange(); break;
+            default: activitiesMatchingCriteria = []; break;
+        }
+
+        if (student) {
+            activitiesMatchingCriteria = activitiesMatchingCriteria.filter(activity => {
+                return activity.students.indexOf(student) > -1
+            })
+        }
+
         return (
             <MDBContainer style={{marginTop: "30px", marginBottom: "30px"}}>
                 {activitiesMatchingCriteria.length === 0 && <MDBAlert color="info">No activities match the search criteria</MDBAlert>}
-                {activitiesMatchingCriteria.map((activity, i) => <Activity key={i} data={activity} />)}
+                {activitiesMatchingCriteria.map((activity, i) => <Activity key={i} data={activity} activities={data} setActivities={setActivities} />)}
             </MDBContainer>
         )
     }
@@ -92,9 +110,9 @@ export default ({ activities: data, setActivities, students }) => {
     const customDateSelection = () => {
         return (
             <div>
-                <form id="date-picker" style={{ display: "flex", justifyContent: "space-around", padding: "30px 25% 0px" }}>
-                    <MDBInput type="date" name="from" label="From" onChange={onCustomDateChange} />
-                    <MDBInput type="date" name="to" label="To" onChange={onCustomDateChange} />
+                <form style={{ display: "flex", justifyContent: "space-around", padding: "30px 25% 0px" }}>
+                    <MDBInput type="date" name="from" label="From" onChange={(event) => setFrom(new Date(event.target.value))} />
+                    <MDBInput type="date" name="to" label="To" onChange={(event) => setTo(new Date(event.target.value))} />
                 </form>
             </div>
         )

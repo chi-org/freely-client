@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {MDBCard, MDBCardBody, MDBCardText, MDBCollapse, MDBIcon, MDBBadge} from 'mdbreact';
 import { Fragment } from 'react';
+import { deleteActivity } from '../../services/activity_services';
 
-export default ({data}) => {
+export default ({data, activities, setActivities}) => {
     const [linksOpen, setLinksOpen] = useState(false);
 
     const description = () => {
@@ -62,10 +63,18 @@ export default ({data}) => {
         )
     }
 
+    const removeActivity = () => {
+        deleteActivity({ deleteId: data._id }).then(() => {
+            setActivities(activities.filter(activity => activity._id !== data._id));
+        }).catch(error => {
+            console.log("Error:", error)
+        });
+    }
+
     return (
         <MDBCard>
             <MDBCardBody style={{display: "flex"}}>
-                <div style={{width: "70%"}}>
+                <div style={{ width: "70%" }}>
                     {description()}
                     {data.date && date()}
                     {expandLinksButton()}
@@ -74,6 +83,9 @@ export default ({data}) => {
                 <div style={{width: "30%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
                     {students()}
                     {assets()}
+                    <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", width: "100%" }}>
+                        <MDBIcon className="click-action" size="md" icon="trash" onClick={removeActivity} />
+                    </div>
                 </div>
             </MDBCardBody>
         </MDBCard>
