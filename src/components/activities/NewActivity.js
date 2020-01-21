@@ -20,7 +20,7 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
             students: [],
             assets: []
         }
-        
+
         addNewActivity(data).then((response) => {
             activities.push(response.data.data);
             history.push("/activities");
@@ -102,7 +102,7 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
             </Fragment>
         )
     }
-    
+
     return (
         <MDBModal fullHeight toggle={() => setShowStudentsModal(false)} position="left" isOpen={isOpen}>
             {header()}

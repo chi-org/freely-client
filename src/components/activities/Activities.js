@@ -7,49 +7,45 @@ import { getAllActivities } from '../../services/activity_services';
 export default ({ activities: data, setActivities }) => {
 
     const [showNewActivityModal, setShowNewActivityModal] = useState(false);
+    const [from, setFrom] = useState(null);
+    const [to, setTo] = useState(null);
 
     // Search field manipulation
     const todayActivities = () => {
         const today = new Date();
-
         return data.filter(activity => {
             const date = new Date(activity.date);
-            
             return date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
         });
     }
 
     const nextSevenDaysActivities = () => {
         const today = new Date();
-
         return data.filter(activity => {
             const date = new Date(activity.date);
-            
             return date.getDate() >= today.getDate() && date.getDate() < today.getDate() + 7 && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear();
         });
     }
 
-    const unscheduledActivities = () => data.filter(activity => !activity.date);
+    const unscheduledActivities = () => {
+        return data.filter(activity => !activity.date);
+    }
 
     const onCustomDateChange = () => {
-        const form = document.getElementById("date-picker");
-        const from = new Date(form.from.value);
-        const to = new Date(form.to.value);
-
         if (from && to) {
-            setActivitiesMatchingCriteria(data.filter(activity => {
+            return data.filter(activity => {
                 const date = new Date(activity.date);
                 return date >= from && date <= to;
-            }));
+            });
         }
         else {
-            setActivitiesMatchingCriteria([]);
+            return [];
         }
     }
 
     // Elements
-    const [activitiesMatchingCriteria, setActivitiesMatchingCriteria] = useState(todayActivities());
     const [showCustomDateSelection, setShowCustomDateSelection] = useState(false);
+    const [filterMethod, setFilterMethod] = useState("unscheduled");
 
     const studentPicker = () => {
         return (
@@ -64,12 +60,13 @@ export default ({ activities: data, setActivities }) => {
     }
 
     const activityDateRange = () => {
+        console.log(filterMethod)
         return (
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", marginTop: "10px" }}>
-                <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(todayActivities); setShowCustomDateSelection(false) }}>Today</MDBBtn>
-                <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(nextSevenDaysActivities); setShowCustomDateSelection(false) }}>Next 7 Days</MDBBtn>
-                <MDBBtn color="primary" onClick={() => { setActivitiesMatchingCriteria(unscheduledActivities); setShowCustomDateSelection(false) }}>Unscheduled</MDBBtn>
-                <MDBBtn color="primary" onClick={() => { setShowCustomDateSelection(true); setActivitiesMatchingCriteria([]) }} data-cy='activity-date-button' >
+                <MDBBtn color="primary" onClick={() => { setFilterMethod("today"); setShowCustomDateSelection(false) }}>Today</MDBBtn>
+                <MDBBtn color="primary" onClick={() => { setFilterMethod("week"); setShowCustomDateSelection(false) }}>Next 7 Days</MDBBtn>
+                <MDBBtn color="primary" onClick={() => { setFilterMethod("unscheduled"); setShowCustomDateSelection(false) }}>Unscheduled</MDBBtn>
+                <MDBBtn color="primary" onClick={() => { setFilterMethod("custom"); setShowCustomDateSelection(true) }} data-cy='activity-date-button' >
                     <MDBIcon icon="search" />
                 </MDBBtn>
             </div>
@@ -77,10 +74,20 @@ export default ({ activities: data, setActivities }) => {
     }
 
     const activities = () => {
+        let activitiesMatchingCriteria = [];
+
+        switch (filterMethod) {
+            case "today": activitiesMatchingCriteria = todayActivities(); break;
+            case "week": activitiesMatchingCriteria = nextSevenDaysActivities(); break;
+            case "unscheduled": activitiesMatchingCriteria = unscheduledActivities(); break;
+            case "custom": activitiesMatchingCriteria = onCustomDateChange(); break;
+            default: activitiesMatchingCriteria = []; break;
+        }
+
         return (
             <MDBContainer style={{marginTop: "30px", marginBottom: "30px"}}>
                 {activitiesMatchingCriteria.length === 0 && <MDBAlert color="info">No activities match the search criteria</MDBAlert>}
-                {activitiesMatchingCriteria.map((activity, i) => <Activity key={i} data={activity} />)}
+                {activitiesMatchingCriteria.map((activity, i) => <Activity key={i} data={activity} activities={data} setActivities={setActivities} />)}
             </MDBContainer>
         )
     }
@@ -96,9 +103,9 @@ export default ({ activities: data, setActivities }) => {
     const customDateSelection = () => {
         return (
             <div>
-                <form id="date-picker" style={{ display: "flex", justifyContent: "space-around", padding: "30px 25% 0px" }}>
-                    <MDBInput type="date" name="from" label="From" onChange={onCustomDateChange} data-cy='activity-date-from' />
-                    <MDBInput type="date" name="to" label="To" onChange={onCustomDateChange} data-cy='activity-date-to' />
+                <form style={{ display: "flex", justifyContent: "space-around", padding: "30px 25% 0px" }}>
+                    <MDBInput type="date" name="from" label="From" onChange={(event) => setFrom(new Date(event.target.value))} data-cy='activity-date-from' />
+                    <MDBInput type="date" name="to" label="To" onChange={(event) => setTo(new Date(event.target.value))} data-cy='activity-date-to' />
                 </form>
             </div>
         )

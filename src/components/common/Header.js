@@ -7,7 +7,7 @@ import Logout from "../auth/Logout";
 import { getLoggedInUser } from "../../services/authServices";
 import { useHistory } from "react-router-dom";
 
-export default ({ setActivities }) => {
+export default ({ setActivities, setStudents }) => {
 
     const history = useHistory();
 
@@ -67,7 +67,7 @@ export default ({ setActivities }) => {
                 {loggedInUser ? navLoggedIn() : navLoggedOut()}
             </MDBCollapse>
 
-            <Login showLogin={showLogin} setShowLogin={setShowLogin} setActivities={setActivities} />
+            <Login showLogin={showLogin} setShowLogin={setShowLogin} setActivities={setActivities} setStudents={setStudents} />
             <Register showRegister={showRegister} setShowRegister={setShowRegister} />
             <Logout showLogout={showLogout} setShowLogout={setShowLogout} />
         </MDBNavbar>
