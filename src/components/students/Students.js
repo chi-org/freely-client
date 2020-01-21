@@ -4,7 +4,7 @@ import StudentCard from "./StudentCard";
 import AddStudentCard from "./AddStudentCard";
 import { useHistory } from "react-router-dom";
 
-export default ({students: data}) => {
+export default ({students: data, setStudents}) => {
 
     const history = useHistory();
 
@@ -13,7 +13,7 @@ export default ({students: data}) => {
         return (
             <MDBContainer>
                 {data.length === 0 && <MDBAlert color="info">Add a student</MDBAlert>}
-                {data.map((student, i) => <StudentCard key={i} data={student} />)}
+                {data.map((student, i) => <StudentCard key={i} data={student} students={data} setStudents={setStudents} />)}
             </MDBContainer>
         )
     }

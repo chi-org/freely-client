@@ -44,7 +44,7 @@ export default () => {
             <Route path="*" render={() => <Header setActivities={setActivities} setStudents={setStudents} />} />
             <Route exact path="/" render={() => getLoggedInUser() ? < Redirect to="/activities" /> : <Redirect to="/landing" />} />
             <Route exact path="/activities" render={() => <Activities activities={activities} students={students} setActivities={setActivities} />} />
-            <Route exact path="/students" render={() => <Students students={students} />} />
+            <Route exact path="/students" render={() => <Students students={students} setStudents={setStudents} />} />
             <Route exact path="/landing" render={() => <Landing />} />
             {!getLoggedInUser() && <Route path="*" render={() => <Redirect to="/landing" />} />}
         </BrowserRouter>
