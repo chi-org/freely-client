@@ -30,7 +30,7 @@ export default ({ data, activities, setActivities, students }) => {
             <MDBCollapse isOpen={assetListOpen}>
                 <MDBListGroup>
                     {data.assets.map((asset, i) => {
-                        return <MDBListGroupItem key={i}><a href={asset} target="_blank">{asset}</a>
+                        return <MDBListGroupItem key={i}><a href={asset} target="_blank" rel="noopener noreferrer">{asset}</a>
                         </MDBListGroupItem>
                     })}
                 </MDBListGroup>

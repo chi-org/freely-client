@@ -78,12 +78,12 @@ export default ({ activities, isOpen, setShowNewActivityModal, students, setActi
                     {assets.map((asset, i) => {
                         return <MDBListGroupItem value={i} key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>{asset}
                             <MDBIcon icon="backspace" className="click-action" onClick={(event) => {
-                                setAssets(assets.filter((ass, i) => i != event.target.parentNode.value));
+                                setAssets(assets.filter((_ass, i) => i !== event.target.parentNode.value));
                             }} />
                         </MDBListGroupItem>
                     })}
                 </MDBListGroup>
-                <MDBInput icon="save" iconSize="sm" id="new-asset" type="text" label="Add new asset link" onIconClick={() => {
+                <MDBInput icon="save" iconSize="sm" id="new-asset" type="url" label="Add new asset link" onIconClick={() => {
                     const assetInput = document.getElementById("new-asset");
                     if (assetInput.value) {
                         setAssets([...assets, assetInput.value]);
