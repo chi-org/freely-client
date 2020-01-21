@@ -129,7 +129,7 @@ export default ({ activities: data, setActivities, students }) => {
             {showCustomDateSelection && customDateSelection()}
             {activities()}
             {newActivityButton()}
-            <NewActivity activities={data} isOpen={showNewActivityModal} setShowNewActivityModal={setShowNewActivityModal} students={students} />
+            <NewActivity setActivities={setActivities} activities={data} isOpen={showNewActivityModal} setShowNewActivityModal={setShowNewActivityModal} students={students} />
         </div>
     )
 }
