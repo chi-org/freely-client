@@ -5,7 +5,10 @@ import NewActivity from './NewActivity';
 import { getAllActivities } from '../../services/activity_services';
 import { Multiselect } from 'multiselect-react-dropdown';
 
-export default ({ activities: data, setActivities, students }) => {
+export default ({ activities, setActivities, students }) => {
+
+    // TODO add assets
+    // TODO add completion
 
     const [showNewActivityModal, setShowNewActivityModal] = useState(false);
     const [customDateFrom, setCustomDateFrom] = useState(null);
@@ -15,7 +18,7 @@ export default ({ activities: data, setActivities, students }) => {
     // Search field manipulation
     const filterActivitiesByToday = () => {
         const today = new Date();
-        return data.filter(activity => {
+        return activities.filter(activity => {
             const date = new Date(activity.date);
             return date.getDate() === today.getDate() &&
                 date.getMonth() === today.getMonth() &&
@@ -25,7 +28,7 @@ export default ({ activities: data, setActivities, students }) => {
 
     const filterActivitiesByThisWeek = () => {
         const today = new Date();
-        return data.filter(activity => {
+        return activities.filter(activity => {
             const date = new Date(activity.date);
             return date.getDate() >= today.getDate() &&
                 date.getDate() < today.getDate() + 7 &&
@@ -35,12 +38,12 @@ export default ({ activities: data, setActivities, students }) => {
     }
 
     const filterActivitiesByUnscheduled = () => {
-        return data.filter(activity => !activity.date);
+        return activities.filter(activity => !activity.date);
     }
 
     const filterActivitiesByCustomDate = () => {
         if (customDateFrom && customDateTo) {
-            return data.filter(activity => {
+            return activities.filter(activity => {
                 const date = new Date(activity.date);
                 return date >= customDateFrom && date <= customDateTo;
             });
@@ -115,7 +118,7 @@ export default ({ activities: data, setActivities, students }) => {
         )
     }
 
-    const activities = () => {
+    const showActivities = () => {
         let activitiesMatchingCriteria = [];
 
         switch (filterMethod) {
@@ -138,7 +141,7 @@ export default ({ activities: data, setActivities, students }) => {
                     <MDBAlert color="info">No activities match the search criteria</MDBAlert>
                 }
                 {activitiesMatchingCriteria.map((activity, i) =>
-                    <Activity key={i} students={students} data={activity} activities={data} setActivities={setActivities} />
+                    <Activity key={i} students={students} data={activity} activities={activities} setActivities={setActivities} />
                 )}
             </MDBContainer>
         )
@@ -185,11 +188,11 @@ export default ({ activities: data, setActivities, students }) => {
             {studentPicker()}
             {activityDateRange()}
             {showCustomDateSelection && customDateSelection()}
-            {activities()}
+            {showActivities()}
             {newActivityButton()}
             <NewActivity
                 setActivities={setActivities}
-                activities={data}
+                activities={activities}
                 isOpen={showNewActivityModal}
                 setShowNewActivityModal={setShowNewActivityModal}
                 students={students} />

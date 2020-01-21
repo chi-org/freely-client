@@ -1,35 +1,39 @@
-import React, {useState} from 'react';
-import { MDBCard, MDBCardBody, MDBCardText, MDBCollapse, MDBIcon, MDBBadge } from 'mdbreact';
+import React, { useState } from 'react';
+import { MDBCard, MDBCardBody, MDBCardText, MDBCollapse, MDBIcon, MDBBadge, MDBListGroup, MDBListGroupItem } from 'mdbreact';
 import { deleteActivity } from '../../services/activity_services';
 
 export default ({ data, activities, setActivities, students }) => {
 
-    const [linksOpen, setLinksOpen] = useState(false);
+    const [assetListOpen, setAssetListOpen] = useState(false);
 
     const date = () => {
         const date = new Date(data.date);
         return <MDBCardText>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</MDBCardText>
     }
 
-    const expandLinksButton = () => {
-        // currently not attached to incoming data, remove comment when properly integrated
-        return (
-            <div onClick={() => {setLinksOpen(!linksOpen)}} style={{display: "flex", alignItems: "center"}}>
-                <MDBIcon size="sm" icon={!linksOpen ? "angle-right" : "angle-down"} />
-                <MDBCardText style={{marginLeft: "10px"}}>Links (3)</MDBCardText>
-            </div>
-        )
+    const expandAssetList = () => {
+        if (data.assets.length > 0) {
+            return (
+                <div onClick={() => { setAssetListOpen(!assetListOpen) }} style={{ display: "flex", alignItems: "center" }}>
+                    <MDBIcon size="sm" icon={!assetListOpen ? "angle-right" : "angle-down"} />
+                    <MDBCardText style={{ marginLeft: "10px" }}>Assets ({data.assets.length})</MDBCardText>
+                </div>
+            )
+        }
+        else {
+            return <p style={{ color: "#B0B0B0", fontSize: "0.8em", marginBottom: "0px" }}><i>No attachments</i></p>
+        }
     }
 
-    const links = () => {
-        // currently not attached to incoming data, remove comment when properly integrated
+    const assetList = () => {
         return (
-            <MDBCollapse isOpen={linksOpen}>
-                <ul style={{listStyle: "none", marginTop: "10px", marginBottom: "0px"}}>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                </ul>
+            <MDBCollapse isOpen={assetListOpen}>
+                <MDBListGroup>
+                    {data.assets.map((asset, i) => {
+                        return <MDBListGroupItem key={i}><a href={asset} target="_blank">{asset}</a>
+                        </MDBListGroupItem>
+                    })}
+                </MDBListGroup>
             </MDBCollapse>
         )
     }
@@ -54,16 +58,6 @@ export default ({ data, activities, setActivities, students }) => {
         )
     }
 
-    const assets = () => {
-        return (
-            <div style={{display: "flex", justifyContent: "flex-end", alignItems: "flex-end"}}>
-                {data.assets.map((asset, i) =>
-                    <img key={i} style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" alt="" />
-                )}
-            </div>
-        )
-    }
-
     const removeActivity = () => {
         deleteActivity({ deleteId: data._id }).then(() => {
             setActivities(activities.filter(activity => activity._id !== data._id));
@@ -79,12 +73,11 @@ export default ({ data, activities, setActivities, students }) => {
                     {data.name && <MDBCardText>{data.name}</MDBCardText>}
                     <MDBCardText>{data.textContent}</MDBCardText>
                     {data.date && date()}
-                    {expandLinksButton()}
-                    {links()}
+                    {expandAssetList()}
+                    {assetList()}
                 </div>
                 <div style={{width: "30%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
                     {displayStudents()}
-                    {assets()}
                     <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", width: "100%" }}>
                         <MDBIcon className="click-action" size="md" icon="trash" onClick={removeActivity} />
                     </div>
