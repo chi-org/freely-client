@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { MDBCard, MDBIcon, MDBBtn, MDBCardBody } from 'mdbreact';
 import { useHistory } from 'react-router-dom';
 import {addStudent} from '../../services/student_services';

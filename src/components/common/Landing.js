@@ -1,10 +1,11 @@
 import React from 'react';
-import { MDBContainer } from 'mdbreact';
 
 export default () => {
     return (
-        <MDBContainer>
-            <h1>Landing page</h1>
-        </MDBContainer>
+        <iframe
+            title="external-homepage"
+            style={{ border: "none", width: "100%", height: "100vh", marginTop: "-100px" }}
+            src="https://learnfreely.app/">
+        </iframe>
     )
 }

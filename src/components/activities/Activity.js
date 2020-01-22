@@ -1,70 +1,65 @@
-import React, {useState} from 'react';
-import {MDBCard, MDBCardBody, MDBCardText, MDBCollapse, MDBIcon, MDBBadge} from 'mdbreact';
-import { Fragment } from 'react';
+import React, { useState } from 'react';
+import { MDBCard, MDBCardBody, MDBCardText, MDBCollapse, MDBIcon, MDBBadge, MDBListGroup, MDBListGroupItem } from 'mdbreact';
 import { deleteActivity } from '../../services/activity_services';
 
-export default ({data, activities, setActivities}) => {
-    const [linksOpen, setLinksOpen] = useState(false);
+export default ({ data, activities, setActivities, students }) => {
 
-    const description = () => {
-        return (
-            <Fragment>
-                {data.name && <MDBCardText>{data.name}</MDBCardText>}
-                <MDBCardText>{data.textContent}</MDBCardText>
-            </Fragment>
-        )
-    }
+    const [assetListOpen, setAssetListOpen] = useState(false);
 
     const date = () => {
         const date = new Date(data.date);
         return <MDBCardText>{`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}</MDBCardText>
     }
 
-    const expandLinksButton = () => {
-        // currently not attached to incoming data, remove comment when properly integrated
-        return (
-            <div onClick={() => {setLinksOpen(!linksOpen)}} style={{display: "flex", alignItems: "center"}}>
-                <MDBIcon size="sm" icon={!linksOpen ? "angle-right" : "angle-down"} />
-                <MDBCardText style={{marginLeft: "10px"}}>Links (3)</MDBCardText>
-            </div>
-        )
+    const expandAssetList = () => {
+        if (data.assets.length > 0) {
+            return (
+                <div onClick={() => { setAssetListOpen(!assetListOpen) }} style={{ display: "flex", alignItems: "center" }}>
+                    <MDBIcon size="sm" icon={!assetListOpen ? "angle-right" : "angle-down"} />
+                    <MDBCardText style={{ marginLeft: "10px" }}>Assets ({data.assets.length})</MDBCardText>
+                </div>
+            )
+        }
+        else {
+            return <p style={{ color: "#B0B0B0", fontSize: "0.8em", marginBottom: "0px" }}><i>No attachments</i></p>
+        }
     }
 
-    const links = () => {
-        // currently not attached to incoming data, remove comment when properly integrated
+    const assetList = () => {
         return (
-            <MDBCollapse isOpen={linksOpen}>
-                <ul style={{listStyle: "none", marginTop: "10px", marginBottom: "0px"}}>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                </ul>
+            <MDBCollapse isOpen={assetListOpen}>
+                <MDBListGroup>
+                    {data.assets.map((asset, i) => {
+                        return <MDBListGroupItem key={i}><a href={asset} target="_blank" rel="noopener noreferrer">{asset}</a>
+                        </MDBListGroupItem>
+                    })}
+                </MDBListGroup>
             </MDBCollapse>
         )
     }
 
-    const students = () => {
+    const displayStudents = () => {
         return (
             <div style={{display: "flex", flexWrap: "wrap", justifyContent: "flex-end", alignItems: "flex-end"}}>
-                {data.students.map((student, i) =>
-                    <MDBBadge key={i} pill color="indigo" style={{textAlign: "right",  marginBottom: "5px", marginLeft: "5px"}}>{student}</MDBBadge>
-                )}
-            </div>
-        )
-    }
-
-    const assets = () => {
-        return (
-            <div style={{display: "flex", justifyContent: "flex-end", alignItems: "flex-end"}}>
-                {data.assets.map((asset, i) =>
-                    <img key={i} style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" alt="" />
-                )}
+                {data.students.map((student_id, i) => {
+                    let studentRecord = students.find(student => student._id === student_id);
+                    if (studentRecord) {
+                        return <MDBBadge
+                            pill
+                            key={i}
+                            className="student-pill"
+                            color={studentRecord.color}
+                            style={{ backgroundColor: `${studentRecord.color}` }}>{studentRecord.name}
+                        </MDBBadge>
+                    }
+                    else return false;
+                })}
             </div>
         )
     }
 
     const removeActivity = () => {
-        deleteActivity({ deleteId: data._id }).then(response => {
+        deleteActivity({ deleteId: data._id }).then(() => {
             setActivities(activities.filter(activity => activity._id !== data._id));
         }).catch(error => {
             console.log("Error:", error)
@@ -72,19 +67,19 @@ export default ({data, activities, setActivities}) => {
     }
 
     return (
-        <MDBCard>
+        <MDBCard className="cy-activity">
             <MDBCardBody style={{display: "flex"}}>
                 <div style={{ width: "70%" }}>
-                    {description()}
+                    {data.name && <MDBCardText>{data.name}</MDBCardText>}
+                    <MDBCardText>{data.textContent}</MDBCardText>
                     {data.date && date()}
-                    {expandLinksButton()}
-                    {links()}
+                    {expandAssetList()}
+                    {assetList()}
                 </div>
                 <div style={{width: "30%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
-                    {students()}
-                    {assets()}
+                    {displayStudents()}
                     <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", width: "100%" }}>
-                        <MDBIcon className="click-action" size="md" icon="trash" onClick={removeActivity} />
+                        <MDBIcon className="cy-delete-activity click-action" size="md" icon="trash" onClick={removeActivity} />
                     </div>
                 </div>
             </MDBCardBody>

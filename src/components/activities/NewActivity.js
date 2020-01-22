@@ -1,12 +1,19 @@
-import React, { useState, Fragment } from 'react';
-import { MDBIcon, MDBBtn, MDBInput, MDBBadge, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from 'mdbreact';
-import { useHistory } from 'react-router-dom';
-import {submitNewActivity as addNewActivity} from '../../services/activity_services';
+import React, { Fragment } from 'react';
+import { MDBIcon, MDBBtn, MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter, MDBListGroup, MDBListGroupItem } from 'mdbreact';
+import { submitNewActivity as addNewActivity } from '../../services/activity_services';
+import { Multiselect } from 'multiselect-react-dropdown';
+import { useState } from 'react';
 
-export default ({activities, isOpen, setShowNewActivityModal}) => {
+export default ({ activities, isOpen, setShowNewActivityModal, students, setActivities }) => {
 
-    const [showStudentsModal, setShowStudentsModal] = useState(false);
-    const history = useHistory();
+    const [assets, setAssets] = useState([]);
+    const [studentsToInclude, setStudentsToInclude] = useState([]);
+
+    const hideModal = () => {
+        setAssets([]);
+        setStudentsToInclude([]);
+        setShowNewActivityModal(false);
+    }
 
     const submitNewActivity = (event) => {
         event.preventDefault();
@@ -17,65 +24,38 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
             textContent: form.details.value,
             date: form.date.value || null,
             completed: false,
-            students: [],
-            assets: []
+            students: studentsToInclude.map(student => student._id),
+            assets: assets
         }
 
         addNewActivity(data).then((response) => {
-            activities.push(response.data.data);
-            history.push("/activities");
-            setShowNewActivityModal(false);
+            setActivities([...activities, response.data.data]);
+            hideModal();
         }).catch(error => {
             console.log("An error occurred during submission:", error);
         });
     }
 
-    const header = () => {
-        return (
-            <MDBModalHeader toggle={() => setShowNewActivityModal(false)} style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                New Activity
-            </MDBModalHeader>
-        )
-    }
-
     const date = () => {
         return (
             <Fragment>
-                <h4 style={{marginTop: "30px"}}>Date</h4>
-                <MDBInput name="date" type="date" data-cy={'new-activity-date'} />
+                <h4 style={{ marginTop: "30px" }}>Date</h4>
+                <MDBInput name="date" type="date"  data-cy={'new-activity-date'}/>
             </Fragment>
         )
     }
 
-    const students = () => {
+    const studentSelector = () => {
         return (
             <Fragment>
-                <h4 style={{marginTop: "30px"}}>Students</h4>
-                <div style={{display:"flex", flexWrap:"wrap"}}>
-                    <MDBBadge pill className="student-pill click-action"><p>Bob</p></MDBBadge>
-                    <MDBBadge pill className="student-pill click-action student-selected"><p style={{color:"gray", padding:"5px", margin:"0px"}}>Rogrido Gutierrez</p></MDBBadge>
-                    <MDBBadge pill className="student-pill click-action"><p style={{color:"gray", padding:"5px", margin:"0px"}}>Bill</p></MDBBadge>
-                </div>
+                <h4 style={{ marginTop: "30px" }}>Students</h4>
+                <Multiselect
+                    onSelect={(value) => setStudentsToInclude(value)}
+                    onRemove={(value) => setStudentsToInclude(value)}
+                    options={students}
+                    displayValue="name"
+                    style={{ searchBox: { border: "none", borderBottom: "1px solid #D0D0D0", borderRadius: "0px" } }} />
             </Fragment>
-        )
-    }
-
-    const studentModal = () => {
-        const students = ["Student 1", "Student 2", "Student 3"];
-
-        return (
-            <MDBModal isOpen={showStudentsModal}>
-                <MDBModalHeader toggle={() => setShowStudentsModal(false)}>Students</MDBModalHeader>
-                <MDBModalBody>
-                    <div>
-                        {students.map((student, i) => {
-                            return <span key={i} className="click-action" onClick={() => {setShowStudentsModal(false)}} style={{marginRight: "10px"}}>
-                                <MDBBadge pill color="indigo">{student}</MDBBadge>
-                            </span>
-                        })}
-                    </div>
-                </MDBModalBody>
-            </MDBModal>
         )
     }
 
@@ -88,38 +68,50 @@ export default ({activities, isOpen, setShowNewActivityModal}) => {
         )
     }
 
-    const images = () => {
+    const addAssets = () => {
         return (
             <Fragment>
-                <h4 style={{marginTop: "30px"}}>Images</h4>
-                <div style={{display: "flex", alignItems: "center"}}>
-                    <div style={{width: "70px", display: "flex", justifyContent: "center"}}>
-                        <MDBIcon size="lg" icon="camera" />
-                    </div>
-                    <img style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" alt="" />
-                    <img style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" alt="" />
-                </div>
+                <h4 style={{ marginTop: "30px" }}>Assets</h4>
+                <MDBListGroup>
+                    {assets.map((asset, i) => {
+                        return <MDBListGroupItem value={i} key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>{asset}
+                            <MDBIcon icon="backspace" className="click-action" onClick={(event) => {
+                                setAssets(assets.filter((_ass, i) => i !== event.target.parentNode.value));
+                            }} />
+                        </MDBListGroupItem>
+                    })}
+                </MDBListGroup>
+                <MDBInput icon="save" iconSize="sm" id="new-asset" type="url" label="Add new asset link" onIconClick={() => {
+                    const assetInput = document.getElementById("new-asset");
+                    if (assetInput.value) {
+                        setAssets([...assets, assetInput.value]);
+                        assetInput.value = "";
+                    }
+                }
+                } />
             </Fragment>
         )
     }
 
     return (
-        <MDBModal fullHeight toggle={() => setShowStudentsModal(false)} position="left" isOpen={isOpen}>
-            {header()}
+        <MDBModal fullHeight position="left" isOpen={isOpen}>
+            <MDBModalHeader
+                toggle={hideModal}
+                style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>New Activity
+            </MDBModalHeader>
+
             <MDBModalBody>
                 <form id="form" onSubmit={submitNewActivity}>
                 <br />
                     {details()}
-                    {/* {completed()} */}
                     {date()}
-                    {students()}
-                    {images()}
-                    {studentModal()}
+                    {studentSelector()}
+                    {addAssets()}
                 </form>
             </MDBModalBody>
             <MDBModalFooter>
-                <MDBBtn form="form" onClick={() => setShowNewActivityModal(false)} color="secondary">Cancel</MDBBtn>
-                <MDBBtn form="form" type="submit" color="primary" data-cy={'new-activity-done'} >Done</MDBBtn>
+                <MDBBtn form="form" onClick={hideModal} color="secondary">Cancel</MDBBtn>
+                <MDBBtn form="form" type="submit" color="primary" data-cy={'new-activity-done'}>Done</MDBBtn>
             </MDBModalFooter>
         </MDBModal>
     )
