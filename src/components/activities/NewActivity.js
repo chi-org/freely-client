@@ -1,9 +1,17 @@
 import React, { Fragment } from 'react';
-import { MDBIcon, MDBBtn, MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from 'mdbreact';
+import { MDBIcon, MDBBtn, MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter, MDBListGroup, MDBListGroupItem } from 'mdbreact';
 import { submitNewActivity as addNewActivity } from '../../services/activity_services';
 import { Multiselect } from 'multiselect-react-dropdown';
+import { useState } from 'react';
 
 export default ({ activities, isOpen, setShowNewActivityModal, students, setActivities }) => {
+
+    const [assets, setAssets] = useState([]);
+
+    const hideModal = () => {
+        setAssets([]);
+        setShowNewActivityModal(false);
+    }
 
     const submitNewActivity = (event) => {
         event.preventDefault();
@@ -15,12 +23,12 @@ export default ({ activities, isOpen, setShowNewActivityModal, students, setActi
             date: form.date.value || null,
             completed: false,
             students: studentsToInclude.map(student => student._id),
-            assets: []
+            assets: assets
         }
 
         addNewActivity(data).then((response) => {
             setActivities([...activities, response.data.data]);
-            setShowNewActivityModal(false);
+            hideModal();
         }).catch(error => {
             console.log("An error occurred during submission:", error);
         });
@@ -62,17 +70,27 @@ export default ({ activities, isOpen, setShowNewActivityModal, students, setActi
         )
     }
 
-    const images = () => {
+    const addAssets = () => {
         return (
             <Fragment>
-                <h4 style={{marginTop: "30px"}}>Images</h4>
-                <div style={{display: "flex", alignItems: "center"}}>
-                    <div style={{width: "70px", display: "flex", justifyContent: "center"}}>
-                        <MDBIcon size="lg" icon="camera" />
-                    </div>
-                    <img style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" alt="" />
-                    <img style={{marginLeft: "5px"}} src="https://via.placeholder.com/70" alt="" />
-                </div>
+                <h4 style={{ marginTop: "30px" }}>Assets</h4>
+                <MDBListGroup>
+                    {assets.map((asset, i) => {
+                        return <MDBListGroupItem value={i} key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>{asset}
+                            <MDBIcon icon="backspace" className="click-action" onClick={(event) => {
+                                setAssets(assets.filter((_ass, i) => i !== event.target.parentNode.value));
+                            }} />
+                        </MDBListGroupItem>
+                    })}
+                </MDBListGroup>
+                <MDBInput icon="save" iconSize="sm" id="new-asset" type="url" label="Add new asset link" onIconClick={() => {
+                    const assetInput = document.getElementById("new-asset");
+                    if (assetInput.value) {
+                        setAssets([...assets, assetInput.value]);
+                        assetInput.value = "";
+                    }
+                }
+                } />
             </Fragment>
         )
     }
@@ -80,7 +98,7 @@ export default ({ activities, isOpen, setShowNewActivityModal, students, setActi
     return (
         <MDBModal fullHeight position="left" isOpen={isOpen}>
             <MDBModalHeader
-                toggle={() => setShowNewActivityModal(false)}
+                toggle={hideModal}
                 style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>New Activity
             </MDBModalHeader>
 
@@ -90,11 +108,11 @@ export default ({ activities, isOpen, setShowNewActivityModal, students, setActi
                     {details()}
                     {date()}
                     {studentSelector()}
-                    {images()}
+                    {addAssets()}
                 </form>
             </MDBModalBody>
             <MDBModalFooter>
-                <MDBBtn form="form" onClick={() => setShowNewActivityModal(false)} color="secondary">Cancel</MDBBtn>
+                <MDBBtn form="form" onClick={hideModal} color="secondary">Cancel</MDBBtn>
                 <MDBBtn form="form" type="submit" color="primary">Done</MDBBtn>
             </MDBModalFooter>
         </MDBModal>
