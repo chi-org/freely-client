@@ -7,6 +7,7 @@ import { useState } from 'react';
 export default ({ activities, isOpen, setShowNewActivityModal, students, setActivities }) => {
 
     const [assets, setAssets] = useState([]);
+    const [studentsToInclude, setStudentsToInclude] = useState([]);
 
     const hideModal = () => {
         setAssets([]);
@@ -43,17 +44,13 @@ export default ({ activities, isOpen, setShowNewActivityModal, students, setActi
         )
     }
 
-    let studentsToInclude = [];
     const studentSelector = () => {
-        const addStudent = (value) => studentsToInclude = value;
-        const removeStudent = (value) => studentsToInclude = value;
-
         return (
             <Fragment>
                 <h4 style={{ marginTop: "30px" }}>Students</h4>
                 <Multiselect
-                    onSelect={addStudent}
-                    onRemove={removeStudent}
+                    onSelect={(value) => setStudentsToInclude(value)}
+                    onRemove={(value) => setStudentsToInclude(value)}
                     options={students}
                     displayValue="name"
                     style={{ searchBox: { border: "none", borderBottom: "1px solid #D0D0D0", borderRadius: "0px" } }} />
