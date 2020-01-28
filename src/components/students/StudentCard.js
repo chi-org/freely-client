@@ -4,9 +4,10 @@ import { deleteStudent } from '../../services/student_services';
 
 export default ({data: student, students, setStudents}) => {
 
-    function removeStudent() {
+    function removeStudent(event) {
+        event.preventDefault();
         deleteStudent({deleteId: student._id}).then((response) => {
-            setStudents(students.filter(st => st._id !== student._id))
+            setStudents(students.filter(st => st._id !== student._id));
         }).catch(error => {
             console.log("An error occurred trying to delete ", student.name, ": ", error);
         })

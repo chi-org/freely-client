@@ -34,7 +34,7 @@ export default ({ setActivities, setStudents }) => {
                     {pageTitle() !== "Activities" &&
                         <MDBNavItem>
                             <MDBNavLink style={{ color: "white" }} to="/activities"
-                                onClick={() => { setIsOpen(false); }}> data-cy='header-activities'Activities</MDBNavLink>
+                                onClick={() => { setIsOpen(false); }} data-cy='header-activities'> Activities</MDBNavLink>
                         </MDBNavItem>
                     }
                     {pageTitle() !== "Student Setup" &&
