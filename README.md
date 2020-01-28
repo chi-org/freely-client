@@ -1,4 +1,4 @@
-[View Here!](https://chi-org.github.io/landing)
+[View Here!](https://chi-org.github.io/feely-client/)
 ## Available Scripts
 
 In the project directory, you can run:
