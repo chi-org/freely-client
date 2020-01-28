@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA,oBACI,cACJ,CAEA,cACI,gBAAiB,CACjB,iBAAkB,CAClB,eAAgB,CAChB,gBACJ","file":"main.fd0111b9.chunk.css","sourcesContent":[".click-action:hover {\n    cursor: pointer;\n}\n\n.student-pill {\n    text-align: right;\n    margin-bottom: 5px;\n    margin-left: 5px;\n    padding: 5px 15px;\n}\n"]}
