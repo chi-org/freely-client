@@ -1,4 +1,7 @@
 [View Here!](https://chi-org.github.io/freely-client/)
+
+<a href="https://chi-org.github.io/freely-client/" target="_blank">In new tab</a>
+
 ## Available Scripts
 
 In the project directory, you can run:
