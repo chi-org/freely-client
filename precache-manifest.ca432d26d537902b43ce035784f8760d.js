@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "db42ce6191f47e0f1f6b006ccdd861a4",
+    "revision": "a5aa0dcab00411bb69343d5b9c4fa295",
     "url": "/freely-client/index.html"
   },
   {
-    "revision": "0f8c15d94d6b8ef0e812",
-    "url": "/freely-client/static/css/2.5951e3f5.chunk.css"
+    "revision": "63844f1994468b729a4b",
+    "url": "/freely-client/static/css/2.7c693e76.chunk.css"
   },
   {
-    "revision": "b87e3fbc2f3547089200",
+    "revision": "0cb85157a136552ca95e",
     "url": "/freely-client/static/css/main.fd0111b9.chunk.css"
   },
   {
-    "revision": "0f8c15d94d6b8ef0e812",
+    "revision": "63844f1994468b729a4b",
     "url": "/freely-client/static/js/2.9cce06f2.chunk.js"
   },
   {
-    "revision": "b87e3fbc2f3547089200",
-    "url": "/freely-client/static/js/main.3f8bff23.chunk.js"
+    "revision": "0cb85157a136552ca95e",
+    "url": "/freely-client/static/js/main.75f03a46.chunk.js"
   },
   {
     "revision": "f619856368c63de79cff",
